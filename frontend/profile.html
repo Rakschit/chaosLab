@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Profile</i></div>
+    <div class="meta"><a href="dashboard.html">Dashboard</a><span>·</span><a href="index.html">Home</a><span>·</span><a href="#" id="logout">Log out</a></div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero"><h1>Profile</h1><p>Manage your username, plan and password.</p></section>
+  <div class="acc-list">
+    <details open class="" name="acc" id="account">
+      <summary><span class="n">01</span><span class="t"><b>Your account</b><small>email, plan and username</small></span></summary>
+      <div class="body"><form id="profile-form" action="#" method="post" novalidate>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" readonly>
+            </div>
+            <div class="field">
+              <label for="plan">Plan</label>
+              <input id="plan" type="text" readonly>
+            </div>
+            <div class="field">
+              <label for="display_name">Username</label>
+              <input id="display_name" name="display_name" type="text" maxlength="100" autocomplete="nickname" spellcheck="false" required>
+            </div>
+            <div class="msg" id="msg" role="status">Loading…</div>
+            <button class="go" type="submit" id="save">Save username</button>
+          </form></div>
+    </details>
+    <details class="" name="acc" id="plan-section">
+      <summary><span class="n">02</span><span class="t"><b>Plan</b><small>see your plan or request Pro or Institution</small></span></summary>
+      <div class="body"><form id="plan-form" action="#" method="post" novalidate>
+            <div class="msg" id="plan-status" role="status">Loading…</div>
+            <div class="field" id="plan-message-field" style="display:none">
+              <label class="long" for="plan_message">Why do you want Pro? (optional, max 500 characters)</label>
+              <textarea id="plan_message" maxlength="500" rows="3"></textarea>
+            </div>
+            <div class="msg" id="plan-msg" role="status"></div>
+            <button class="go alt" type="submit" id="plan-save" style="display:none">Request Pro</button>
+          </form>
+      <div id="access-block" style="display:none">
+        <hr style="border:0;border-top:1px solid currentColor;opacity:.2;margin:18px 0">
+        <div class="msg" id="access-status" role="status"></div>
+        <form id="access-form" action="#" method="post" novalidate style="display:none">
+          <div class="field">
+            <label for="access_role">I am a</label>
+            <select id="access_role">
+              <option value="student">Student</option>
+              <option value="faculty">Faculty</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="long" for="access_message">Message to the institution admin (optional, max 500 characters)</label>
+            <textarea id="access_message" maxlength="500" rows="3"></textarea>
+          </div>
+          <div class="msg" id="access-msg" role="status"></div>
+          <button class="go alt" type="submit" id="access-save">Ask to be added</button>
+        </form>
+      </div>
+      <div id="inst-block" style="display:none">
+        <hr style="border:0;border-top:1px solid currentColor;opacity:.2;margin:18px 0">
+        <div class="msg" id="inst-status" role="status"></div>
+        <form id="inst-form" action="#" method="post" novalidate style="display:none">
+          <div class="field">
+            <label for="inst_name">Institution name</label>
+            <input id="inst_name" type="text" maxlength="120" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label class="long" for="inst_domains">Email domains, separated by commas (up to 5). One must match your account email.</label>
+            <input id="inst_domains" type="text" maxlength="250" spellcheck="false" autocomplete="off" placeholder="college.edu">
+          </div>
+          <div class="field">
+            <label class="long" for="inst_seats">Seats needed (optional)</label>
+            <input id="inst_seats" type="text" inputmode="numeric" maxlength="7" autocomplete="off">
+          </div>
+          <div class="field">
+            <label class="long" for="inst_message">Anything we should know? (optional, max 500 characters)</label>
+            <textarea id="inst_message" maxlength="500" rows="3"></textarea>
+          </div>
+          <div class="msg" id="inst-msg" role="status"></div>
+          <button class="go alt" type="submit" id="inst-save">Request Institution plan</button>
+        </form>
+      </div></div>
+    </details>
+    <details class="" name="acc" id="password">
+      <summary><span class="n">03</span><span class="t"><b>Change password</b><small>12 to 72 characters</small></span></summary>
+      <div class="body"><form id="password-form" action="#" method="post" novalidate>
+            <div class="field">
+              <label for="current_password">Current password</label>
+              <input id="current_password" type="password" autocomplete="current-password" maxlength="72" required>
+            </div>
+            <div class="field">
+              <label for="new_password">New password (12–72 characters)</label>
+              <input id="new_password" type="password" autocomplete="new-password" maxlength="72" required>
+            </div>
+            <div class="field">
+              <label for="confirm_password">Confirm new password</label>
+              <input id="confirm_password" type="password" autocomplete="new-password" maxlength="72" required>
+            </div>
+            <div class="msg" id="pw-msg" role="status"></div>
+            <button class="go" type="submit" id="pw-save">Change password</button>
+          </form></div>
+    </details>
+    <details class="dz" name="acc" id="delete">
+      <summary><span class="n">04</span><span class="t"><b>Delete account</b><small>permanent, cannot be undone</small></span></summary>
+      <div class="body"><form id="delete-form" action="#" method="post" novalidate>
+            <div class="field">
+              <label class="long" for="delete_password">Enter your password to permanently delete your account</label>
+              <input id="delete_password" type="password" autocomplete="current-password" maxlength="72" required>
+            </div>
+            <div class="msg" id="del-msg" role="status"></div>
+            <button class="go danger" type="submit" id="del-save">Delete my account</button>
+          </form></div>
+    </details>
+  </div>
+  <div class="links"><div class="meta"><a href="history.html">Singleplayer history</a></div><div class="meta" id="institution-admin-link" style="display:none"><a href="institution-admin.html">Institution admin: manage roster</a></div><div class="meta" id="admin-link" style="display:none"><a href="admin.html">Admin: review plan requests</a></div></div>
+  <footer><span>ChaosLab</span><span><a href="index.html">Home</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

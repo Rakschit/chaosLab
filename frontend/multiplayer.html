@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ChaosLab - Multiplayer</title>
+  <link rel="stylesheet" href="css/multiplayer.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>/ Multiplayer</i></div>
+    <div class="meta"><a href="index.html">Home</a><span>·</span><a href="login.html">Log in</a></div>
+  </header>
+
+  <div class="grid mt">
+    <div class="card">
+      <h3>Create room</h3>
+      <p>Host a private incident and invite others with a code.</p>
+      <form action="room.html" method="get" class="mt">
+        <div class="field">
+          <label for="env">Environment</label>
+          <select id="env" name="env">
+            <option>Web server</option>
+            <option>API gateway</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="diff">Difficulty</label>
+          <select id="diff" name="difficulty">
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="max">Max players</label>
+          <select id="max" name="max">
+            <option>2</option><option>4</option><option>6</option><option>8</option>
+          </select>
+        </div>
+        <button class="go" type="submit">Create room</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Join with code</h3>
+      <p>Got a room code from a friend? Enter it below.</p>
+      <form action="room.html" method="get" class="mt">
+        <div class="field">
+          <label for="code">Room code</label>
+          <input id="code" name="code" placeholder="e.g. K7Q2-X9" maxlength="8" spellcheck="false" autocomplete="off">
+        </div>
+        <button class="go" type="submit">Join room</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="sec"><span class="label">Open rooms</span><span class="hint">refresh to update</span></div>
+  <div class="card" style="padding:0">
+    <table>
+      <thead>
+        <tr><th>ROOM</th><th>ENVIRONMENT</th><th>DIFFICULTY</th><th>PLAYERS</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>K7Q2-X9</td><td>Web server</td><td>Easy</td><td class="ok">2 / 4</td><td><a class="btn sm" href="room.html?code=K7Q2-X9">Join</a></td></tr>
+        <tr><td>M4ZP-81</td><td>API gateway</td><td>Hard</td><td class="ok">1 / 6</td><td><a class="btn sm" href="room.html?code=M4ZP-81">Join</a></td></tr>
+        <tr><td>R0TN-5A</td><td>Web server</td><td>Medium</td><td class="bad">4 / 4</td><td><button class="btn sm" disabled>Full</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer><span>ChaosLab</span><span><a href="singleplayer.html">Singleplayer</a></span></footer>
+</div>
+</body>
+</html>

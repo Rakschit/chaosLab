@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab — Institution Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/institution-admin.css">
+</head>
+<body>
+<header><div class="bar"><div class="brand"><span class="dot"></span><b>ChaosLab</b><i>/ Institution admin</i></div><nav><a href="profile.html">Profile</a><a href="dashboard.html">Dashboard</a><a href="#" id="logout">Log out</a></nav></div></header>
+<main>
+  <section class="intro"><p class="eyebrow">INSTITUTION CONTROL PANEL</p><h1>Roster access</h1><p>Upload the institute-maintained student and faculty roster. The server checks membership during institution login.</p></section>
+  <section class="panel">
+    <h2>Access requests</h2>
+    <p>People with an email on your institution's domain who are not on the roster can ask to be added. Approving adds them to the roster with the role you choose and puts them on the institution plan.</p>
+    <p id="requests-status" class="msg" role="status">Loading requests…</p>
+    <div id="requests"></div>
+  </section>
+  <section class="panel">
+    <h2>Monthly limits</h2>
+    <p>Choose how many games each group can start per month. A limit can be lower than your institution's licensed maximum, never higher.</p>
+    <form id="limits-form" action="#" method="post" novalidate>
+      <div class="limits" id="limits-grid"></div>
+      <button id="limits-save" type="submit" disabled>Save limits</button>
+      <p id="limits-status" class="msg" role="status">Loading limits…</p>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Current roster</h2>
+    <div class="stats"><div><small>STUDENTS</small><strong id="students">—</strong></div><div><small>FACULTY</small><strong id="faculty">—</strong></div><div><small>ROSTER ENFORCEMENT</small><strong id="enforcement">—</strong></div></div>
+    <p id="status" class="msg" role="status">Loading roster status…</p>
+  </section>
+  <section class="panel">
+    <h2>Import CSV</h2>
+    <p>Required headers: <code>email,name,role,external_id</code>. Role must be <code>student</code> or <code>faculty</code>. Token-mode institutes must provide each person's opaque <code>external_id</code>, which must exactly match the JWT <code>sub</code>.</p>
+    <p class="warning">Import is a full roster sync. Records missing from the CSV will be deactivated. Review the file before confirming. Do not include passwords.</p>
+    <div class="field"><label for="csv">Roster CSV (UTF-8, max 10,000 rows)</label><input id="csv" type="file" accept=".csv,text/csv"></div>
+    <div id="preview" class="preview" aria-live="polite">Choose a CSV to preview it before importing.</div>
+    <button id="import" type="button" disabled>Validate and import roster</button>
+    <p id="import-status" class="msg" role="status"></p>
+  </section>
+  <footer><span>ChaosLab</span><a href="index.html">Home</a></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/institution-admin.js"></script>
+</body>
+</html>

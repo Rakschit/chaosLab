@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Verify email</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/verify-email.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot" id="status-dot"></span><b>ChaosLab</b><i>Verify email</i></div>
+    <div class="meta"><a href="login.html">Log in</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cols">
+    <section class="info">
+      <span class="eyebrow">One more step</span>
+      <h1>Check your inbox <span>and verify your email.</span></h1>
+      <p class="lead">We need to confirm your email address before you can log in and start your first incident.</p>
+
+      <div class="block">
+        <h2>What to do</h2>
+        <ol class="steps">
+          <li><span class="n">01</span><div><b>Open the email we sent</b><small>It comes from ChaosLab. Check your spam folder if you can't find it.</small></div></li>
+          <li><span class="n">02</span><div><b>Click the verification link</b><small>The link expires in 1 hour.</small></div></li>
+          <li><span class="n">03</span><div><b>Log in</b><small>Once your email is verified, you can log in.</small></div></li>
+        </ol>
+      </div>
+
+      <p class="inst-note">Used the wrong email? <a href="register.html" style="color:var(--ok)">Register again</a> with the right one.</p>
+    </section>
+
+    <div class="formcol">
+      <div class="win">
+        <div class="win-bar"><i></i><i></i><i></i><span class="name">verify_email</span></div>
+        <div class="win-body">
+          <div class="sec"><span class="label">Verify your email</span></div>
+
+          <div class="state">
+            <!-- Shown after registering, before the user has opened the email link. -->
+            <p class="mid" id="pending">We sent a verification link to <span class="ok" id="email-shown">your email</span>. Open it to finish creating your account. The link expires in 1 hour.</p>
+
+            <!-- Shown while and after the email link is being checked. -->
+            <h2 id="status" class="mt"></h2>
+            <div class="msg" id="msg" role="status"></div>
+            <p class="mt" id="login-link" style="display:none"><a href="login.html">Go to log in</a></p>
+          </div>
+
+          <form id="resend-form" action="#" method="post" class="mt" novalidate>
+            <div class="field">
+              <label class="long" for="email">Didn't get it? Enter your email and we'll send a new link</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" spellcheck="false" maxlength="254" required>
+            </div>
+            <div class="msg" id="resend-msg" role="status"></div>
+            <button class="btn" type="submit" id="resend">Resend verification link</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><span>ChaosLab</span><span><a href="register.html">Wrong email?</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/verify-email.js"></script>
+</body>
+</html>

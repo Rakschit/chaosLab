@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Classroom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/classroom.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Classroom</i></div>
+    <div class="meta"><a href="dashboard.html">Dashboard</a><span>·</span><a href="profile.html">Profile</a><span>·</span><a href="#" id="logout">Log out</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Classroom</h1>
+    <p>Join a class with a code, or run your own. Classroom games don't use your personal singleplayer limit.</p>
+  </section>
+
+  <div class="msg" id="msg" role="status">Loading…</div>
+
+  <!-- Faculty only -->
+  <div id="faculty" style="display:none">
+    <div class="sec"><span class="label">Create a classroom</span><span class="hint">permanent · never expires</span></div>
+    <div class="form" id="create-form">
+      <label>Name<input id="c-name" maxlength="80" placeholder="e.g. Incident Response - Batch A" autocomplete="off"></label>
+      <label>Difficulty
+        <select id="c-diff"><option value="easy">easy</option><option value="medium">medium</option><option value="hard">hard</option></select>
+      </label>
+      <label>Incident (seed)
+        <select id="c-seed">
+          <option value="random">random for each student</option>
+          <option value="same">same for everyone</option>
+          <option value="pool2">pool of 2, shuffled</option>
+          <option value="pool3">pool of 3, shuffled</option>
+        </select>
+      </label>
+      <label>Games per student<input id="c-attempts" type="number" min="1" max="10" value="1"></label>
+      <button class="go" type="button" id="c-create">Create classroom</button>
+    </div>
+    <p class="hint" style="margin:12px 0 0" id="seed-hint">Each student gets a different random incident, so scores are not directly comparable.</p>
+    <p class="hint" style="margin:6px 0 0">Every game a student starts is counted against your monthly allowance for that difficulty.</p>
+
+    <div class="sec"><span class="label">Your monthly allowance</span><span class="hint" id="reset-hint"></span></div>
+    <div class="allow" id="allow"></div>
+
+    <div class="sec"><span class="label">Your classrooms</span><span class="hint" id="owned-hint"></span></div>
+    <div class="stack" id="owned"></div>
+  </div>
+
+  <div class="sec"><span class="label">Join a classroom</span><span class="hint">ask your faculty for the code</span></div>
+  <div class="form" id="join-form">
+    <label>Join code<input id="j-code" maxlength="8" placeholder="8 letters or digits" autocomplete="off" spellcheck="false" style="text-transform:uppercase;letter-spacing:3px"></label>
+    <button class="go" type="button" id="j-join">Join</button>
+  </div>
+
+  <div class="sec"><span class="label">Your classes</span><span class="hint" id="joined-hint"></span></div>
+  <div class="stack" id="joined"></div>
+
+  <footer><span>ChaosLab</span><span><a href="dashboard.html">Dashboard</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/api.js"></script>
+<script src="js/classroom.js"></script>
+</body>
+</html>

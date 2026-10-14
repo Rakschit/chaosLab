@@ -1,0 +1,5 @@
+/* Same look as the profile page; this file only adds what this page needs. */
+@import url("profile.css");
+
+.panel{margin-top:32px;display:flex;flex-direction:column;gap:20px;max-width:520px}
+.panel form{max-width:none}

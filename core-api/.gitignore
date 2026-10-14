@@ -1,0 +1,4 @@
+.vercel
+server
+*.exe
+.env*

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ChaosLab - Institutions</title>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>/ Institutions</i></div>
+    <div class="meta"><a href="admin.html">Pro requests</a><span>·</span><a href="profile.html">Profile</a><span>·</span><a href="#" id="logout">Log out</a></div>
+  </header>
+
+  <div class="sec"><span class="label">Institutions</span><span class="hint" id="count"></span></div>
+  <div class="msg" id="msg" role="status">Loading…</div>
+  <div class="stack" id="list"></div>
+
+  <div class="sec"><span class="label">Add an institution</span></div>
+  <form id="create-form" action="#" method="post" novalidate>
+    <div class="field"><label for="c-name">Name</label>
+      <input id="c-name" type="text" maxlength="120" placeholder="Symbiosis Institute of Computer Studies and Research"></div>
+    <div class="field"><label for="c-slug">Code (slug, used as the token issuer)</label>
+      <input id="c-slug" type="text" maxlength="40" placeholder="sicsr" spellcheck="false"></div>
+    <div class="field"><label for="c-mode">Login method</label>
+      <select id="c-mode">
+        <option value="domain">domain: students register here with the institution email</option>
+        <option value="token">token: the institution hosts the login</option>
+      </select></div>
+    <div class="field" id="c-url-field" style="display:none"><label for="c-url">Institution login URL (https)</label>
+      <input id="c-url" type="url" maxlength="500" placeholder="https://login.college.edu/chaoslab" spellcheck="false"></div>
+    <div class="field" id="c-key-field" style="display:none"><label for="c-key">Institution public key (PEM, RS256 or ES256)</label>
+      <textarea id="c-key" rows="5" maxlength="4096" spellcheck="false" placeholder="-----BEGIN PUBLIC KEY-----"></textarea></div>
+    <div class="split">
+      <div class="field"><label for="c-easy">Easy / month</label><input id="c-easy" type="number" min="0" max="100000" value="200"></div>
+      <div class="field"><label for="c-medium">Medium / month</label><input id="c-medium" type="number" min="0" max="100000" value="150"></div>
+      <div class="field"><label for="c-hard">Hard / month</label><input id="c-hard" type="number" min="0" max="100000" value="100"></div>
+    </div>
+    <div class="field"><label for="c-seats">Seats (0 = unlimited)</label>
+      <input id="c-seats" type="number" min="0" max="1000000" value="0"></div>
+    <div class="field"><label for="c-contact">Contact email (optional)</label>
+      <input id="c-contact" type="email" maxlength="254"></div>
+    <div class="msg" id="create-msg" role="status"></div>
+    <button class="go" type="submit">Create institution</button>
+  </form>
+
+  <footer><span>ChaosLab</span><span><a href="index.html">Home</a></span></footer>
+</div>
+<script src="js/auth-api.js"></script>
+<script src="js/admin-institutions.js"></script>
+</body>
+</html>

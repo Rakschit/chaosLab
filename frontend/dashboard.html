@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Dashboard</i></div>
+    <div class="meta"><a href="profile.html" id="who">account</a><span>·</span><a href="#" id="logout">Log out</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero compact">
+    <h1 id="welcome">Welcome back.</h1>
+    <p>Pick a mode to start a new incident. <span class="tag" id="plan-tag">…</span></p>
+  </section>
+
+  <div class="sec"><span class="label">Play</span><span class="hint">choose a mode</span></div>
+  <div class="grid two">
+    <a class="row sel" href="singleplayer.html"><span class="n">Singleplayer</span><span class="d">solo simulation · seeded · 3 difficulties</span></a>
+    <a class="row" href="multiplayer.html"><span class="n">Multiplayer</span><span class="d">race friends on the same incident</span></a>
+    <a class="row" href="classroom.html" id="classroom-row" style="display:none"><span class="n">Classroom</span><span class="d">join a class, or run one · scores and time taken</span></a>
+  </div>
+
+  <div class="sec"><span class="label">Singleplayer games left this month</span><span class="hint" id="reset-hint"></span></div>
+  <div class="msg" id="limits-msg" role="status">Loading…</div>
+  <div class="grid" id="limits"></div>
+  <p class="note" id="upgrade" style="display:none"></p>
+
+  <div class="sec"><span class="label">Your account</span></div>
+  <div class="grid">
+    <a class="row" href="history.html"><span class="n">History</span><span class="d">your past singleplayer games</span></a>
+    <a class="row" href="profile.html"><span class="n">Profile and plan</span><span class="d">edit details · request Pro</span></a>
+    <a class="row" href="admin.html" id="admin-row" style="display:none"><span class="n">Admin</span><span class="d">review Pro requests</span></a>
+  </div>
+
+  <footer><span>ChaosLab · incident simulator</span><span><a href="index.html">Home</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

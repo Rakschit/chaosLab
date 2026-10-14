@@ -1,0 +1,112 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/v1/auth/login",
+      "destination": "/api/auth/session?_route=login"
+    },
+    {
+      "source": "/api/v1/auth/logout",
+      "destination": "/api/auth/session?_route=logout"
+    },
+    {
+      "source": "/api/v1/auth/me",
+      "destination": "/api/auth/session?_route=me"
+    },
+    {
+      "source": "/api/v1/auth/register",
+      "destination": "/api/auth/register?_route=register"
+    },
+    {
+      "source": "/api/v1/auth/verify-email",
+      "destination": "/api/auth/register?_route=verify-email"
+    },
+    {
+      "source": "/api/v1/auth/resend-verification",
+      "destination": "/api/auth/register?_route=resend-verification"
+    },
+    {
+      "source": "/api/v1/auth/forgot-password",
+      "destination": "/api/auth/password?_route=forgot-password"
+    },
+    {
+      "source": "/api/v1/auth/reset-password",
+      "destination": "/api/auth/password?_route=reset-password"
+    },
+    {
+      "source": "/api/v1/auth/change-password",
+      "destination": "/api/auth/password?_route=change-password"
+    },
+    {
+      "source": "/api/v1/auth/profile",
+      "destination": "/api/auth/account?_route=profile"
+    },
+    {
+      "source": "/api/v1/auth/delete-account",
+      "destination": "/api/auth/account?_route=delete-account"
+    },
+    {
+      "source": "/api/v1/auth/plan-request",
+      "destination": "/api/auth/plan?_route=plan-request"
+    },
+    {
+      "source": "/api/v1/auth/admin/plan-requests",
+      "destination": "/api/auth/plan?_route=admin-plan-requests"
+    },
+    {
+      "source": "/api/v1/auth/admin/plan-requests/decision",
+      "destination": "/api/auth/plan?_route=admin-plan-decision"
+    },
+    {
+      "source": "/api/v1/auth/institution/start",
+      "destination": "/api/auth/institution?_route=start"
+    },
+    {
+      "source": "/api/v1/auth/institution/callback",
+      "destination": "/api/auth/institution?_route=callback"
+    },
+    {
+      "source": "/api/v1/auth/institution/roster",
+      "destination": "/api/auth/institution?_route=roster"
+    },
+    {
+      "source": "/api/v1/auth/admin/institutions",
+      "destination": "/api/auth/institution?_route=admin-institutions"
+    },
+    {
+      "source": "/api/v1/auth/admin/institutions/domain",
+      "destination": "/api/auth/institution?_route=admin-institution-domain"
+    },
+    {
+      "source": "/api/v1/auth/admin/institutions/license",
+      "destination": "/api/auth/institution?_route=admin-institution-license"
+    },
+    {
+      "source": "/api/v1/auth/institution-request",
+      "destination": "/api/auth/institution?_route=institution-request"
+    },
+    {
+      "source": "/api/v1/auth/admin/institution-requests",
+      "destination": "/api/auth/institution?_route=admin-institution-requests"
+    },
+    {
+      "source": "/api/v1/auth/admin/institution-requests/decision",
+      "destination": "/api/auth/institution?_route=admin-institution-request-decision"
+    },
+    {
+      "source": "/api/v1/auth/institution/access-request",
+      "destination": "/api/auth/institution?_route=access-request"
+    },
+    {
+      "source": "/api/v1/auth/institution/access-requests",
+      "destination": "/api/auth/institution?_route=access-requests"
+    },
+    {
+      "source": "/api/v1/auth/institution/access-requests/decision",
+      "destination": "/api/auth/institution?_route=access-decision"
+    },
+    {
+      "source": "/api/v1/auth/institution/limits",
+      "destination": "/api/auth/institution?_route=limits"
+    }
+  ]
+}

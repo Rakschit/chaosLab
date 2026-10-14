@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Home</i></div>
+    <div class="meta" id="auth-nav"><a href="login.html">Log in</a><span>·</span><a href="register.html">Register</a></div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <span class="pill">Seeded incident simulator <b>Solo · Multiplayer</b></span>
+    <h1>Hunt the attacker <span>in the logs.</span></h1>
+    <p>ChaosLab drops you into a live, simulated server incident. Read the logs, find every attacker and report their source IPs and what each one did.</p>
+    <div class="cta" id="cta">
+      <a class="btn sub" href="register.html">Create account</a>
+      <a class="btn" href="login.html">Log in</a>
+    </div>
+
+    <div class="win" aria-hidden="true">
+      <div class="win-bar"><i></i><i></i><i></i><span class="name">access.log</span><span class="live">LIVE_STREAM: /var/log/nginx</span></div>
+      <div class="scroll">
+        <table class="log">
+          <thead><tr><th>TIMESTAMP</th><th>SOURCE_IP</th><th>CODE</th><th>REQUEST</th></tr></thead>
+          <tbody>
+            <tr><td>10:42:01</td><td class="ip">198.51.100.4</td><td class="c200">200</td><td>GET /index</td></tr>
+            <tr class="hit"><td>10:42:01</td><td class="ip">203.0.113.7</td><td class="code">401</td><td>POST /login</td></tr>
+            <tr><td>10:42:02</td><td class="ip">192.0.2.18</td><td class="c200">200</td><td>GET /static/app.js</td></tr>
+            <tr class="hit"><td>10:42:02</td><td class="ip">203.0.113.7</td><td class="code">401</td><td>POST /login</td></tr>
+            <tr><td>10:42:03</td><td class="ip">198.51.100.9</td><td class="c200">200</td><td>GET /dashboard</td></tr>
+            <tr class="warn"><td>10:42:04</td><td class="ip">203.0.113.7</td><td class="code">403</td><td>POST /login</td></tr>
+            <tr><td>10:42:05</td><td class="ip">192.0.2.31</td><td class="c200">200</td><td>GET /profile</td></tr>
+            <tr class="hit"><td>10:42:05</td><td class="ip">203.0.113.7</td><td class="code">401</td><td>POST /login</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="win-foot"><span class="alert">&gt; AUTH FAILURES (401/403): 4</span><span>ROGUE IP: UNKNOWN</span></div>
+    </div>
+  </section>
+
+  <div class="sec"><h2>Plans</h2><span class="hint">monthly limits reset <b>1st of month @ 00:00 UTC</b></span></div>
+  <div class="tablewrap">
+    <table class="plans">
+      <colgroup><col style="width:22%"><col style="width:26%"><col style="width:26%"><col style="width:26%"></colgroup>
+      <thead>
+        <tr>
+          <th class="spec" scope="col">Plan specification</th>
+          <th class="head" scope="col"><div class="top"><h3>Free</h3><span class="tag">Default</span></div><p>Every account starts here.</p></th>
+          <th class="head pro" scope="col"><div class="top"><h3>Pro</h3><span class="tag">On request</span></div><p>Higher limits. Request it from your profile; an admin reviews each request.</p></th>
+          <th class="head inst" scope="col"><div class="top"><h3>Institution</h3><span class="tag">Academic</span></div><p>For students of a partner institution. Log in through your institution or register with its email domain.</p></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th class="rowlabel" scope="row">Easy / Singleplayer</th><td><b>10</b><small>games / mo</small></td><td class="pro"><b>40</b><small>games / mo</small></td><td class="inst custom">Custom<small>games / mo</small></td></tr>
+        <tr><th class="rowlabel" scope="row">Medium</th><td><b>5</b><small>games / mo</small></td><td class="pro"><b>30</b><small>games / mo</small></td><td class="inst custom">Custom<small>games / mo</small></td></tr>
+        <tr><th class="rowlabel" scope="row">Hard</th><td><b>3</b><small>games / mo</small></td><td class="pro"><b>20</b><small>games / mo</small></td><td class="inst custom">Custom<small>games / mo</small></td></tr>
+        <tr><th class="rowlabel" scope="row">Multiplayer rooms</th><td><b>7</b><small>created / mo</small></td><td class="pro"><b>30</b><small>created / mo</small></td><td class="inst custom">Custom<small>created / mo</small></td></tr>
+        <tr class="cta-row"><td></td><td><a class="btn" href="register.html">Start free</a></td><td class="pro"><a class="btn" href="login.html">Request Pro</a></td><td class="inst"><a class="btn" href="login.html">Institution login</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Limits reset on the 1st of every month at 00:00 UTC. Joining a multiplayer room is <b>always free</b>; only creating a room counts toward your limit. Institution limits are custom for each institution.</p>
+</main>
+
+<footer class="shell">
+  <span>ChaosLab · incident simulator</span>
+  <span id="footer-auth"><a href="login.html">Log in</a> · <a href="register.html">Register</a></span>
+</footer>
+<script src="js/auth-api.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

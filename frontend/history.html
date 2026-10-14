@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - History</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/history.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>History</i></div>
+    <div class="meta"><a href="dashboard.html">Dashboard</a><span>·</span><a href="singleplayer.html">Play</a><span>·</span><a href="profile.html">Profile</a><span>·</span><a href="#" id="logout">Log out</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Singleplayer history</h1>
+    <p>Review the games you've finished and the answers you submitted.</p>
+  </section>
+
+  <div class="sec"><span class="label">Games</span><span class="hint" id="summary"></span></div>
+
+  <div class="msg" id="msg" role="status">Loading…</div>
+  <div class="stack" id="list"></div>
+  <button class="go" type="button" id="more" style="display:none">Load more</button>
+
+  <footer><span>ChaosLab</span><span><a href="index.html">Home</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/api.js"></script>
+<script src="js/history.js"></script>
+</body>
+</html>

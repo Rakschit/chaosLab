@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - New Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/singleplayer.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>New Simulation</i></div>
+    <div class="meta"><a href="dashboard.html">Dashboard</a></div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero"><h1>New simulation</h1><p>Choose an environment, a seed and a difficulty, then start.</p></section>
+  <div class="term">
+    <div class="sec"><span class="label">Target environment</span><span class="hint">[select one]</span></div>
+    <div id="envs"></div>
+    <div class="rows">
+      <div class="p"><span>Seed</span><div class="seed"><input id="seed" spellcheck="false"><button class="ic" id="reseed" title="New random seed">↻</button></div></div>
+      <div class="p"><span>Difficulty</span><div class="val"><button class="a" id="prev" title="Previous difficulty">←</button><span id="difficulty"></span><button class="a" id="next" title="Next difficulty">→</button></div></div>
+    </div>
+    <button class="go" id="go">Start Simulation</button>
+    <div class="log" id="log"></div>
+    <div class="keys"><span><b>enter</b> start</span><span><b>↻</b> new seed</span><span><b>← →</b> difficulty</span></div>
+  </div>
+  <footer><span>ChaosLab</span><span><a href="dashboard.html">Dashboard</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/api.js"></script>
+<script src="js/singleplayer.js"></script>
+</body>
+</html>

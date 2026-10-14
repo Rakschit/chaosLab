@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Register</i></div>
+    <div class="meta"><a href="index.html">Home</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cols">
+    <section class="info">
+      <span class="eyebrow">New account</span>
+      <h1>Create your account <span>and start hunting.</span></h1>
+      <p class="lead">Read the logs, find every attacker and report what they did. Sign up takes a minute.</p>
+
+      <div class="block">
+        <h2>What happens next</h2>
+        <ol class="steps">
+          <li><span class="n">01</span><div><b>Create your account</b><small>Display name, email and a password of at least 12 characters.</small></div></li>
+          <li><span class="n">02</span><div><b>Verify your email</b><small>We send you a verification link to confirm your address.</small></div></li>
+          <li><span class="n">03</span><div><b>Start an incident</b><small>Play solo or open a multiplayer room and invite others with a code.</small></div></li>
+        </ol>
+      </div>
+
+      <div class="block">
+        <h2>You start on</h2>
+        <div class="plan">
+          <div class="head"><span>Free</span><span class="tag">Default</span></div>
+          <div class="row"><span>Easy</span><b>10<small>games / mo</small></b></div>
+          <div class="row"><span>Medium</span><b>5<small>games / mo</small></b></div>
+          <div class="row"><span>Hard</span><b>3<small>games / mo</small></b></div>
+          <div class="row"><span>Multiplayer rooms</span><b>7<small>created / mo</small></b></div>
+        </div>
+        <p class="inst-note">Joining a multiplayer room is always free. Part of a partner institution? Register with your institution email, or log in through your institution.</p>
+      </div>
+    </section>
+
+    <div class="formcol">
+      <div class="win">
+        <div class="win-bar"><i></i><i></i><i></i><span class="name">new_account</span></div>
+        <div class="win-body">
+          <div class="sec"><span class="label">Create account</span><span class="sub">Join ChaosLab and start your first incident.</span></div>
+
+          <form id="register-form" action="#" method="post" novalidate>
+            <div class="field">
+              <label for="display_name">Display name</label>
+              <input id="display_name" name="display_name" placeholder="analyst_01" autocomplete="nickname" spellcheck="false" maxlength="100" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" spellcheck="false" maxlength="254" required>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" placeholder="min. 12 characters" autocomplete="new-password" minlength="12" maxlength="72" required>
+            </div>
+            <div class="field">
+              <label for="confirm">Confirm password</label>
+              <input id="confirm" name="confirm" type="password" placeholder="repeat password" autocomplete="new-password" maxlength="72" required>
+            </div>
+            <label class="check"><input type="checkbox" name="terms" required> I agree to the terms of use</label>
+            <div class="msg" id="msg" role="status"></div>
+            <button class="go" type="submit">Create account</button>
+          </form>
+        </div>
+      </div>
+      <p class="hint mt center">Already registered? <a href="login.html">Log in</a></p>
+    </div>
+  </div>
+
+  <footer><span>ChaosLab</span><span><a href="index.html">Home</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

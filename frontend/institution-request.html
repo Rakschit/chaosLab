@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Institution plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/institution-request.css">
+</head>
+<body>
+<header>
+  <div class="shell bar">
+    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Institution plan</i></div>
+    <div class="meta"><a href="dashboard.html">Dashboard</a><span>·</span><a href="profile.html">Profile</a><span>·</span><a href="#" id="logout">Log out</a></div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero"><h1>Institution plan</h1><p>Ask for your school or college email domain to be added. Everyone with a verified email on that domain then gets the institution plan.</p></section>
+
+  <div class="panel">
+    <div class="msg" id="plan-status" role="status">Loading…</div>
+
+    <form id="request-form" action="#" method="post" novalidate style="display:none">
+      <div class="field">
+        <label for="institution_name">Institution name</label>
+        <input id="institution_name" type="text" maxlength="120" autocomplete="organization" required>
+      </div>
+      <div class="field">
+        <label class="long" for="domains">Email domains, separated by commas (up to 5). One must match your account email.</label>
+        <input id="domains" type="text" maxlength="250" spellcheck="false" autocomplete="off" placeholder="college.edu">
+      </div>
+      <div class="field">
+        <label class="long" for="seats">Seats needed (optional, leave empty if you are not sure)</label>
+        <input id="seats" type="text" inputmode="numeric" maxlength="7" autocomplete="off">
+      </div>
+      <div class="field">
+        <label class="long" for="message">Anything we should know? (optional, max 500 characters)</label>
+        <textarea id="message" maxlength="500" rows="3"></textarea>
+      </div>
+      <div class="msg" id="msg" role="status"></div>
+      <button class="go" type="submit" id="send">Send request</button>
+    </form>
+  </div>
+
+  <footer><span>ChaosLab</span><span><a href="index.html">Home</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/institution-request.js"></script>
+</body>
+</html>
