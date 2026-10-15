@@ -86,3 +86,6 @@ td.num,th.num{text-align:right}
 td.ok{color:var(--ok)}td.bad{color:var(--bad)}td.dim{color:var(--dim)}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 @media(max-width:700px){.card .actions{grid-column:1;grid-row:auto;justify-self:start;margin-top:14px}}
+
+/* JetBrains Mono turns "&&" (and similar) into one wide ligature, which looks like extra space while typing. */
+input,textarea,select{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}

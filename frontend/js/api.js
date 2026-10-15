@@ -7,5 +7,5 @@ const API = {
   singleplayerHistory: `${API_BASE}/simulations/singleplayer/history`,
   singleplayerLimits: `${API_BASE}/simulations/singleplayer/limits`,
   classrooms: `${API_BASE}/classrooms`,
-  // multiplayer: `${API_BASE}/simulations/multiplayer`,
+  rooms: `${API_BASE}/rooms`,
 };

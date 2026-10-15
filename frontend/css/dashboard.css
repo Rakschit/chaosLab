@@ -43,7 +43,7 @@ header{border-bottom:1px solid var(--line);background:rgba(8,10,11,.8);backdrop-
 /* mode + account rows as cards */
 .row{position:relative;display:flex;flex-direction:column;gap:6px;padding:22px 24px;border:1px solid var(--line);border-radius:8px;background:var(--panel);min-height:112px}
 .row .n{font-size:20px;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;justify-content:space-between}
-.row .n:after{content:"→";color:var(--dim);font-weight:400;transition:transform .15s,color .15s}
+.row .n:after{content:"\2192";color:var(--dim);font-weight:400;transition:transform .15s,color .15s}
 .row .d{color:var(--mid);font-size:12px}
 .row:hover,.row:focus-visible{border-color:var(--edge);background:var(--panel2)}
 .row:hover .n:after{color:var(--ok);transform:translateX(4px)}

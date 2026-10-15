@@ -63,13 +63,16 @@
   function renderItem(it) {
     var card = el("div", "card");
     var official = it.attempt_number === 1;
+    var room = it.room_code ? it.room_code.slice(0, 4) + "-" + it.room_code.slice(4) : "";
 
     card.appendChild(el("h3", "",
+      (room ? "Multiplayer  ·  " : "") +
       it.score + "/100  ·  " + it.matched + "/" + it.total + " found  ·  " +
       it.difficulty + " " + it.environment));
     card.appendChild(el("p", "dim",
       new Date(it.created_at).toLocaleString() +
-      "  ·  attempt " + it.attempt_number + (official ? " (official)" : " (practice)") +
+      (room ? "  ·  room " + room + "  ·  attempt " + it.attempt_number
+            : "  ·  attempt " + it.attempt_number + (official ? " (official)" : " (practice)")) +
       "  ·  time " + formatDuration(it.duration_seconds) +
       "  ·  seed " + it.seed +
       (it.correct ? "  ·  solved" : "")));

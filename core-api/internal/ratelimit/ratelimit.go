@@ -153,3 +153,19 @@ func (l *Limiter) RetryAfter(ctx context.Context, key string) time.Duration {
 	}
 	return time.Duration(secs) * time.Second
 }
+
+// Refund takes one event back off a counter (for example when the thing the
+// event was counted for failed). It never lets the counter go below zero.
+func (l *Limiter) Refund(ctx context.Context, key string) error {
+	k := keyPrefix + key
+	res, err := l.command(ctx, "DECR", k)
+	if err != nil {
+		return err
+	}
+	var n int64
+	if err := json.Unmarshal(res, &n); err == nil && n < 0 {
+		_, err = l.command(ctx, "SET", k, 0, "KEEPTTL")
+		return err
+	}
+	return nil
+}

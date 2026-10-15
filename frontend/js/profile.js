@@ -78,6 +78,8 @@
 
     if (user.plan === "pro") {
       planStatus.textContent = "You are on the Pro plan.";
+      // Pro users can still request an institution plan.
+      loadInstitutionRequest();
       return;
     }
 

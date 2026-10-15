@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChaosLab - Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/multiplayer.css">
+<link rel="stylesheet" href="css/room.css">
+<link rel="stylesheet" href="css/nav.css">
+</head>
+<body>
+<div id="site-nav"></div>
+
+<main class="wrap">
+  <section class="hero">
+    <h1 id="title">Room</h1>
+    <p id="sub">Loading room...</p>
+  </section>
+
+  <div class="msg" id="msg" role="status"></div>
+
+  <div class="card banner" id="banner" hidden>
+    <div class="win-bar"><i></i><i></i><i></i><span class="name" id="banner-name">room</span></div>
+    <div class="cbody">
+      <div class="big" id="big"></div>
+      <div class="bigsub" id="bigsub"></div>
+      <div class="share" id="share" hidden>
+        <span class="code" id="code"></span>
+        <button class="btn" type="button" id="copy-code">Copy code</button>
+        <button class="btn" type="button" id="copy-link">Copy link</button>
+      </div>
+      <div class="actions" id="actions"></div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="label" id="board-label">Players</span><span class="hint" id="board-hint"></span></div>
+  <div class="card rooms">
+    <table>
+      <thead>
+        <tr><th>#</th><th>PLAYER</th><th>STATUS</th><th>BEST</th><th>TRIES</th></tr>
+      </thead>
+      <tbody id="board"></tbody>
+    </table>
+  </div>
+
+  <footer><span>ChaosLab</span><span><a href="multiplayer.html">Back to multiplayer</a></span></footer>
+</main>
+<script src="js/auth-api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/api.js"></script>
+<script src="js/room.js"></script>
+</body>
+</html>

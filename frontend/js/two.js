@@ -793,9 +793,13 @@ $("d-send").onclick = async () => {
 
     // A classroom game (started from classroom.html) is submitted to its room,
     // so the score and time taken show up for the faculty.
-    const submitUrl = simulation.classroom_id
-        ? `${API.classrooms}/${encodeURIComponent(simulation.classroom_id)}/submit`
-        : API.singleplayerSubmit;
+    // A multiplayer game (started from room.html) is submitted to its room,
+    // so the score and finish time show up on the scoreboard.
+    const submitUrl = simulation.room_code
+        ? `${API.rooms}/${encodeURIComponent(simulation.room_code)}/submit`
+        : simulation.classroom_id
+            ? `${API.classrooms}/${encodeURIComponent(simulation.classroom_id)}/submit`
+            : API.singleplayerSubmit;
 
     try {
         const response = await fetch(submitUrl, {

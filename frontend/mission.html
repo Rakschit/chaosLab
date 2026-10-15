@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ChaosLab - Mission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/two.css">
 </head>
 <body>
@@ -14,11 +16,19 @@
     <div class="grp"><button class="btn abort" id="abort">End simulation</button><button class="btn sub" id="submit">Submit answer</button></div>
   </header>
 
-  <div class="alert">
+  <div class="alert" hidden>
     <div class="crit"><b>● NGX-014 ERR RATE:</b><span class="bad" id="err">--</span></div>
     <span class="mid">AUTH FAILURES (401/403): <span class="ok" id="gw">--</span></span>
     <span class="mid">ROGUE IP: <span class="ok" id="rogue-ip">UNKNOWN</span></span>
     <div class="r"><span class="ok">● LIVE MONITOR</span><span>// POLICY: STRICT_FILTER</span></div>
+  </div>
+
+  <div class="note">
+    <div class="t">TELEMETRY NOTE</div>
+    <div class="m" id="note-text">Loading capture...</div>
+    <!-- Kept (hidden) because two.js reads/writes these ids. -->
+    <div class="chip" hidden>FILTER:<br><span id="filt">[NONE]</span></div>
+    <button class="chip" id="tail" aria-pressed="false" hidden>TAIL -F</button>
   </div>
 
   <div class="main">
@@ -38,18 +48,13 @@
     </section>
   </div>
 
-  <div class="note">
-    <div class="t">TELEMETRY NOTE:</div>
-    <div class="m" id="note-text">Loading capture...</div>
-    <div class="chip">FILTER:<br><span id="filt">[NONE]</span></div>
-    <button class="chip" id="tail" aria-pressed="true">TAIL -F</button>
-  </div>
-
   <div class="prompt"><label for="cmd">~/incident &gt;</label><input id="cmd" value='cat /var/log/nginx/access.log | grep -E "500|502"' spellcheck="false" autocomplete="off"></div>
   <div class="keys"><span>↑↓ navigate tree · ↵ open · tab autocomplete · :q exit · ^C cancel · press h for triage tips</span></div>
 </div>
 
 <dialog id="dossier">
+  <div class="win-bar"><i></i><i></i><i></i><span class="name">submit_answer</span></div>
+  <div class="dbody">
   <h2>Submit answer</h2>
 
   <label>Number of attackers</label>
@@ -63,9 +68,26 @@
 
   <div class="d-sum" id="d-sum">Choose the number of attackers to start.</div>
   <div class="result" id="dossier-result"></div>
+  <div class="after" id="d-after" hidden>
+    <a class="btn sub" id="d-back" href="dashboard.html">Back to dashboard</a>
+    <a class="btn" id="d-history" href="history.html">View history</a>
+  </div>
   <div class="actions">
     <button class="btn" id="d-cancel" type="button">Cancel</button>
     <button class="btn sub" id="d-send" type="button" disabled>Send</button>
+  </div>
+  </div>
+</dialog>
+
+<dialog id="confirm-end" class="confirm">
+  <div class="win-bar"><i></i><i></i><i></i><span class="name">end_simulation</span></div>
+  <div class="dbody">
+    <h2>End simulation?</h2>
+    <p class="cmsg">Are you sure you want to end this simulation? The timer will stop.</p>
+    <div class="actions">
+      <button class="btn" id="end-no" type="button" autofocus>No</button>
+      <button class="btn danger" id="end-yes" type="button">Yes, end it</button>
+    </div>
   </div>
 </dialog>
 
@@ -73,5 +95,6 @@
 <script src="js/api.js"></script>
 <script src="js/two.js"></script>
 <script src="js/shell.js"></script>
+<script src="js/mission-actions.js"></script>
 </body>
 </html>

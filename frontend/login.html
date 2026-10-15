@@ -7,14 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
-<header>
-  <div class="shell bar">
-    <div class="title"><span class="dot"></span><b>ChaosLab</b><i>Log in</i></div>
-    <div class="meta"><a href="index.html">Home</a></div>
-  </div>
-</header>
+<div id="site-nav"></div>
 
 <main class="wrap">
   <div class="cols">
@@ -27,7 +23,6 @@
         <h2>Ways to log in</h2>
         <ol class="steps">
           <li><span class="n">01</span><div><b>Email and password</b><small>Use the account you registered with ChaosLab.</small></div></li>
-          <li><span class="n">02</span><div><b>School or college</b><small>Enter your institution code or institution email and we send you to your institution's own login.</small></div></li>
         </ol>
       </div>
 
@@ -47,7 +42,10 @@
             </div>
             <div class="field">
               <label for="password">Password</label>
-              <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+              <div class="pw">
+                <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" spellcheck="false" autocapitalize="off" required>
+                <button class="pw-toggle" type="button" aria-controls="password" aria-pressed="false" aria-label="Show password">Show</button>
+              </div>
             </div>
             <label class="check"><input type="checkbox" name="remember"> Keep me signed in</label>
             <div class="msg" id="msg" role="status"></div>
@@ -57,28 +55,14 @@
           <p class="links"><span>No account? <a href="register.html">Register</a></span><a href="forgot-password.html">Forgot password?</a></p>
         </div>
       </div>
-
-      <div class="win">
-        <div class="win-bar"><i></i><i></i><i></i><span class="name">institution_login</span></div>
-        <div class="win-body tight">
-          <div class="sec small"><span class="label">School or college</span></div>
-
-          <form id="institution-form" action="#" method="post" novalidate>
-            <div class="field">
-              <label class="long" for="institution">Institution code or your institution email</label>
-              <input id="institution" name="institution" type="text" placeholder="sicsr or you@college.edu" autocomplete="off" spellcheck="false" maxlength="254">
-            </div>
-            <div class="msg" id="institution-msg" role="status"></div>
-            <button class="go btn-alt" type="submit">Log in with your institution</button>
-          </form>
-        </div>
-      </div>
     </div>
   </div>
 
   <footer><span>ChaosLab</span><span><a href="index.html">Home</a></span></footer>
 </main>
 <script src="js/auth-api.js"></script>
+<script src="js/nav.js"></script>
 <script src="js/login.js"></script>
+<script src="js/password-toggle.js"></script>
 </body>
 </html>

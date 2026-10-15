@@ -57,6 +57,47 @@ func NewRouter() http.Handler {
 		middleware.RateLimit("classroom-archive", 20, time.Minute,
 			http.HandlerFunc(handlers.ArchiveClassroom)))
 
+	// Multiplayer races. Joining and playing are free; creating a room is
+	// limited per plan (see handlers/multiplayer_limits.go), on top of this
+	// per-minute cap that stops rapid-fire requests.
+	mux.Handle("POST /api/v1/rooms",
+		middleware.RateLimit("room-create", 5, time.Minute,
+			http.HandlerFunc(handlers.CreateRoom)))
+	mux.Handle("GET /api/v1/rooms",
+		middleware.RateLimit("room-list", 60, time.Minute,
+			http.HandlerFunc(handlers.ListRooms)))
+	mux.Handle("GET /api/v1/rooms/limits",
+		middleware.RateLimit("room-limits", 60, time.Minute,
+			http.HandlerFunc(handlers.RoomLimits)))
+	mux.Handle("POST /api/v1/rooms/join",
+		middleware.RateLimit("room-join", 20, time.Minute,
+			http.HandlerFunc(handlers.JoinRoom)))
+	// The room page polls this every 2 seconds, so it gets a roomy limit.
+	mux.Handle("GET /api/v1/rooms/{code}",
+		middleware.RateLimit("room-state", 90, time.Minute,
+			http.HandlerFunc(handlers.RoomState)))
+	mux.Handle("POST /api/v1/rooms/{code}/start",
+		middleware.RateLimit("room-start", 20, time.Minute,
+			http.HandlerFunc(handlers.StartRoom)))
+	mux.Handle("POST /api/v1/rooms/{code}/leave",
+		middleware.RateLimit("room-leave", 20, time.Minute,
+			http.HandlerFunc(handlers.LeaveRoom)))
+	mux.Handle("POST /api/v1/rooms/{code}/kick",
+		middleware.RateLimit("room-kick", 30, time.Minute,
+			http.HandlerFunc(handlers.KickPlayer)))
+	mux.Handle("POST /api/v1/rooms/{code}/forfeit",
+		middleware.RateLimit("room-forfeit", 20, time.Minute,
+			http.HandlerFunc(handlers.ForfeitRoom)))
+	mux.Handle("POST /api/v1/rooms/{code}/end",
+		middleware.RateLimit("room-end", 20, time.Minute,
+			http.HandlerFunc(handlers.EndRoom)))
+	mux.Handle("GET /api/v1/rooms/{code}/game",
+		middleware.RateLimit("room-game", 20, time.Minute,
+			http.HandlerFunc(handlers.RoomGame)))
+	mux.Handle("POST /api/v1/rooms/{code}/submit",
+		middleware.RateLimit("room-submit", 20, time.Minute,
+			http.HandlerFunc(handlers.SubmitRoomGame)))
+
 	// CORS answers preflights first (they carry no token), then Auth runs.
 	return corsMiddleware(middleware.Auth(mux))
 }

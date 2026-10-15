@@ -7,9 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/institution-admin.css">
+  <link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
-<header><div class="bar"><div class="brand"><span class="dot"></span><b>ChaosLab</b><i>/ Institution admin</i></div><nav><a href="profile.html">Profile</a><a href="dashboard.html">Dashboard</a><a href="#" id="logout">Log out</a></nav></div></header>
+<div id="site-nav"></div>
 <main>
   <section class="intro"><p class="eyebrow">INSTITUTION CONTROL PANEL</p><h1>Roster access</h1><p>Upload the institute-maintained student and faculty roster. The server checks membership during institution login.</p></section>
   <section class="panel">
@@ -44,6 +45,7 @@
   <footer><span>ChaosLab</span><a href="index.html">Home</a></footer>
 </main>
 <script src="js/auth-api.js"></script>
+<script src="js/nav.js"></script>
 <script src="js/institution-admin.js"></script>
 </body>
 </html>

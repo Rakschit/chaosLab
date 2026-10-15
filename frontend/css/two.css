@@ -1,780 +1,148 @@
-:root {
-    --bg: #0b0b0b;
-    --side: #111;
-    --panel: #151515;
-    --line: #232323;
-    --fg: #e6e6e6;
-    --mid: #9a9a9a;
-    --dim: #5c5c5c;
-    --ok: #4fd1a0;
-    --bad: #f0776b;
-    --warn: #e8b45a;
-
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    color-scheme: dark;
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
-
-html,
-body {
-    height: 100%;
-    margin: 0;
-}
-
-html {
-    scroll-padding-top: env(safe-area-inset-top, 0px);
-}
-
-body {
-    background: var(--bg);
-    color: var(--fg);
-    font: 13px/1.45 "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-    overflow: hidden;
-}
-
-.app {
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto auto 1fr auto auto auto;
-}
-
-.ok {
-    color: var(--ok);
-}
-
-.bad {
-    color: var(--bad);
-}
-
-.dim {
-    color: var(--dim);
-}
-
-.mid {
-    color: var(--mid);
-}
-
-button {
-    font: inherit;
-    cursor: pointer;
-    color: inherit;
-}
-
-button:focus-visible,
-input:focus-visible {
-    outline: 1px solid var(--mid);
-}
-
-
-/* ============================================================
-   TOP BAR
-   ============================================================ */
-
-.top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-}
-
-.top h1 {
-    margin: 0;
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: .02em;
-}
-
-.dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--ok);
-    margin-right: 8px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    50% {
-        opacity: .35;
-    }
-}
-
-.grp {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.btn {
-    height: 26px;
-    padding: 0 14px;
-    border: 1px solid var(--line);
-    background: none;
-    font-size: 13px;
-}
-
-.btn.abort {
-    color: var(--bad);
-    border-color: #5a2b27;
-}
-
-.btn.sub {
-    background: var(--fg);
-    color: #0b0b0b;
-    font-weight: 700;
-    border-color: var(--fg);
-}
-
-
-/* ============================================================
-   ALERT STRIP
-   ============================================================ */
-
-.alert {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    padding: 9px 16px;
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-    font-size: 12px;
-}
-
-.crit {
-    border: 1px solid var(--line);
-    background: var(--panel);
-    padding: 3px 10px;
-    display: flex;
-    gap: 16px;
-    letter-spacing: .06em;
-}
-
-.crit b {
-    color: var(--bad);
-}
-
-.crit i {
-    font-style: normal;
-    color: var(--bad);
-    margin-left: auto;
-}
-
-.alert .r {
-    margin-left: auto;
-    display: flex;
-    gap: 26px;
-    color: var(--mid);
-}
-
-
-/* ============================================================
-   MAIN
-   ============================================================ */
-
-.main {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    min-height: 0;
-}
-
-aside {
-    background: var(--side);
-    border-right: 1px solid var(--line);
-    overflow: auto;
-}
-
-.root {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--line);
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.root small {
-    font-size: 12px;
-    color: var(--mid);
-    font-weight: 400;
-    letter-spacing: .08em;
-}
-
-.dir {
-    padding: 12px 16px 4px;
-    color: var(--mid);
-}
-
-.f {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 8px 16px 8px 24px;
-    background: none;
-    border: 0;
-    border-left: 2px solid transparent;
-    text-align: left;
-}
-
-.f span:last-child {
-    margin-left: auto;
-    font-size: 12px;
-    color: var(--dim);
-}
-
-.f:hover {
-    background: var(--panel);
-}
-
-.f.on {
-    background: #12201b;
-    border-left-color: var(--ok);
-    color: var(--ok);
-}
-
-.f.on span:last-child {
-    color: var(--mid);
-}
-
-
-/* ============================================================
-   CONTENT SECTION
-   ============================================================ */
-
-section {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    min-height: 0;
-}
-
-
-/* ============================================================
-   TABS
-   ============================================================ */
-
-.tabs {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--line);
-    overflow-x: auto;
-}
-
-.tab {
-    padding: 9px 20px;
-    background: none;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    color: var(--mid);
-    white-space: nowrap;
-}
-
-.tab.on {
-    color: var(--fg);
-    font-weight: 700;
-    border-bottom-color: var(--ok);
-    background: var(--panel);
-}
-
-.tabs .st {
-    margin-left: auto;
-    padding: 0 16px;
-    color: var(--dim);
-    white-space: nowrap;
-    font-size: 12px;
-}
-
-
-/* ============================================================
-   LOG VIEW
-   ============================================================ */
-
-/*
-   The .view is the scrolling container.
-
-   The table header stays fixed at the top while
-   the log rows scroll underneath it.
-*/
-
-.view {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-}
-
-
-/* ============================================================
-   LOG TABLE
-   ============================================================ */
-
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    table-layout: fixed;
-}
-
-
-/* ============================================================
-   FIXED TABLE HEADER
-   ============================================================ */
-
-thead {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-}
-
-th {
-    position: sticky;
-    top: 0;
-
-    background: var(--bg);
-
-    text-align: left;
-    font-weight: 400;
-
-    color: var(--mid);
-
-    letter-spacing: .1em;
-
-    padding: 8px 8px;
-
-    font-size: 12px;
-
-    border-bottom: 1px solid var(--line);
-
-    z-index: 5;
-
-    /*
-       Required for the resize handle.
-    */
-    position: sticky;
-}
-
-
-/* ============================================================
-   TABLE CELLS
-   ============================================================ */
-
-td {
-    padding: 7px 8px;
-
-    border-bottom: 1px solid #1b1b1b;
-
-    vertical-align: top;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-td.ts {
-    white-space: normal;
-    color: var(--dim);
-    width: 150px;
-}
-
-
-/* ============================================================
-   LOG STATES
-   ============================================================ */
-
-tr.atk td {
-    background: #1a1110;
-}
-
-tr.new {
-    animation: in .5s;
-}
-
-@keyframes in {
-    from {
-        background: #1f2b26;
-    }
-}
-
-
-/* ============================================================
-   USER AGENT
-   ============================================================ */
-
-.ua {
-    text-align: right;
-    color: var(--mid);
-}
-
-
-/* ============================================================
-   DOCUMENT VIEW
-   ============================================================ */
-
-.doc {
-    margin: 0;
-    padding: 18px 20px;
-    white-space: pre-wrap;
-    color: var(--mid);
-    line-height: 1.7;
-}
-
-.doc b {
-    color: var(--fg);
-}
-
-
-/* ============================================================
-   RESIZABLE COLUMNS
-   ============================================================ */
-
-/*
-   Thin invisible area at the right side of each
-   heading that can be dragged horizontally.
-*/
-
-.col-resizer {
-    position: absolute;
-
-    top: 0;
-    right: -3px;
-
-    width: 7px;
-    height: 100%;
-
-    cursor: col-resize;
-
-    z-index: 10;
-}
-
-
-/*
-   Make the resize area visible when hovering.
-*/
-
-.col-resizer:hover {
-    background: var(--line);
-}
-
-
-/*
-   Prevent text selection while dragging.
-*/
-
-.resizing-columns,
-.resizing-columns * {
-    cursor: col-resize !important;
-    user-select: none !important;
-}
-
-
-/* ============================================================
-   NOTE / PROMPT
-   ============================================================ */
-
-.note {
-    display: flex;
-    gap: 26px;
-    align-items: stretch;
-
-    padding: 8px 16px;
-
-    border-top: 1px solid var(--line);
-
-    background: var(--side);
-}
-
-.note .t {
-    color: var(--mid);
-
-    letter-spacing: .08em;
-
-    width: 130px;
-
-    flex: none;
-}
-
-.note .m {
-    color: var(--mid);
-
-    flex: 1;
-
-    align-self: center;
-}
-
-.chip {
-    border: 1px solid var(--line);
-
-    background: none;
-
-    padding: 4px 10px;
-
-    text-align: left;
-
-    letter-spacing: .06em;
-}
-
-
-/* ============================================================
-   TERMINAL PROMPT
-   ============================================================ */
-
-.prompt {
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 9px 16px;
-
-    border-top: 1px solid var(--line);
-}
-
-.prompt label {
-    color: var(--ok);
-
-    flex: none;
-}
-
-.prompt input {
-    flex: 1;
-
-    min-width: 0;
-
-    background: none;
-
-    border: 0;
-
-    color: var(--fg);
-
-    font: inherit;
-
-    caret-color: var(--ok);
-}
-
-.prompt input:focus-visible {
-    outline: 0;
-}
-
-
-/* ============================================================
-   KEYBOARD HELP
-   ============================================================ */
-
-.keys {
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding: 6px 16px 8px;
-
-    color: var(--dim);
-
-    font-size: 12px;
-
-    letter-spacing: .04em;
-
-    flex-wrap: wrap;
-}
-
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 820px) {
-
-    .main {
-        grid-template-columns: 1fr;
-    }
-
-    aside {
-        display: none;
-    }
-
-    .ua,
-    th:last-child {
-        display: none;
-    }
-
-    .alert .r,
-    .top .hide {
-        display: none;
-    }
-
-    .note .t {
-        display: none;
-    }
-}
-
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
-    * {
-        animation: none !important;
-    }
-}
-
-
-/* ============================================================
-   SUBMIT DIALOG
-   ============================================================ */
-
-dialog {
-    background: var(--panel);
-
-    color: var(--fg);
-
-    border: 1px solid var(--line);
-
-    padding: 22px;
-
-    width: min(520px, 92vw);
-    max-height: 90vh;
-    overflow-y: auto;
-
-    font: inherit;
-}
-
-dialog::backdrop {
-    background: rgba(0, 0, 0, .65);
-}
-
-dialog h2 {
-    margin: 0 0 16px;
-
-    font-size: 16px;
-}
-
-dialog label {
-    display: block;
-
-    color: var(--mid);
-
-    margin: 12px 0 4px;
-}
-
-dialog input,
-dialog select {
-    width: 100%;
-
-    height: 32px;
-
-    background: var(--bg);
-
-    border: 1px solid #2c2c2c;
-
-    color: var(--fg);
-
-    font: inherit;
-
-    padding: 0 10px;
-}
-
-dialog input:focus-visible,
-dialog select:focus-visible {
-    outline: 1px solid var(--mid);
-}
-
-dialog .result {
-    min-height: 44px;
-
-    margin-top: 16px;
-
-    color: var(--mid);
-}
-
-dialog .actions {
-    display: flex;
-
-    justify-content: flex-end;
-
-    gap: 10px;
-
-    margin-top: 8px;
-}
-
-dialog .btn:disabled {
-    opacity: .5;
-
-    cursor: default;
-}
-
-/* ============================================================
-   SUBMIT DIALOG: ATTACKER CARDS
-   ============================================================ */
-
-dialog .seg {
-    display: flex;
-    gap: 8px;
-}
-
-dialog .seg .btn {
-    flex: 1;
-    height: 32px;
-}
-
-dialog .seg .btn[aria-pressed="true"] {
-    background: var(--fg);
-    color: #0b0b0b;
-    font-weight: 700;
-    border-color: var(--fg);
-}
-
-.atk {
-    margin-top: 14px;
-    padding: 12px 14px 14px;
-    border: 1px solid var(--line);
-    background: var(--bg);
-}
-
-.atk-title {
-    font-weight: 700;
-}
-
-.atk-row {
-    margin-top: 12px;
-    padding-top: 2px;
-    border-top: 1px dashed var(--line);
-}
-
-.atk .btn {
-    margin-top: 12px;
-}
-
-.atk .btn:disabled {
-    opacity: .5;
-    cursor: default;
-}
-
-.atk-res {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 8px;
-    font-size: 12px;
-}
-
-.d-sum {
-    margin-top: 14px;
-    font-size: 12px;
-    color: var(--dim);
-}
+:root{color-scheme:dark;--bg:#080a0b;--side:#0b0e0f;--panel:#0d1011;--panel2:#101415;--line:#1c2224;--fg:#e8eceb;--mid:#97a19f;--dim:#586260;--ok:#4fe0a8;--bad:#ff6b6b;--warn:#f0b13c;--edge:#2a3234;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--fg);font:13px/1.5 "JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;overflow:hidden}
+.app{height:100%;display:grid;grid-template-rows:auto auto 1fr auto auto}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.dim{color:var(--dim)}.mid{color:var(--mid)}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:1px solid var(--mid)}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 16px;min-height:56px;border-bottom:1px solid var(--line);background:rgba(8,10,11,.95);flex-wrap:wrap}
+.top h1{margin:0;font-size:15px;font-weight:700;display:flex;align-items:center;letter-spacing:.2px}
+.top h1 .mid{font-weight:400;margin-left:8px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:12px;box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.grp{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.grp>span{font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
+.grp>h1+span{margin-left:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 14px;border:1px solid var(--edge);border-radius:4px;background:var(--bg);font-size:12px;letter-spacing:.3px;color:var(--mid)}
+.btn:before{content:"["}.btn:after{content:"]"}
+.btn:hover,.btn:focus-visible{border-color:var(--mid);color:var(--fg)}
+.btn.abort{color:var(--bad);border-color:rgba(255,107,107,.5)}
+.btn.abort:hover,.btn.abort:focus-visible{background:rgba(255,107,107,.1);border-color:var(--bad);color:var(--bad)}
+.btn.sub{background:var(--ok);border-color:var(--ok);color:#03150d;font-weight:700;box-shadow:0 6px 22px -8px rgba(79,224,168,.7)}
+.btn.sub:hover,.btn.sub:focus-visible{background:#6df0bb;color:#03150d}
+.btn:disabled{opacity:.45;cursor:default;box-shadow:none}
+
+/* ---------- alert strip ---------- */
+.alert[hidden]{display:none}
+.alert{display:flex;align-items:center;gap:22px;padding:8px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;font-size:12px;background:var(--side)}
+.crit{border:1px solid rgba(255,107,107,.35);background:rgba(255,107,107,.07);border-radius:4px;padding:2px 10px;display:flex;gap:14px;letter-spacing:.05em}
+.crit b{color:var(--bad);font-weight:700}
+.alert .r{margin-left:auto;display:flex;gap:22px;color:var(--dim)}
+.alert .r .ok{color:var(--ok)}
+
+/* ---------- main ---------- */
+.main{display:grid;grid-template-columns:300px 1fr;min-height:0}
+aside{background:var(--side);border-right:1px solid var(--line);overflow:auto}
+.root{display:flex;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);font-size:15px;font-weight:700;flex-wrap:wrap}
+.root small{font-size:11px;color:var(--dim);font-weight:400;letter-spacing:.1em}
+.dir{padding:12px 16px 4px;color:var(--dim);font-size:12px}
+.f{display:flex;align-items:center;gap:10px;width:100%;padding:8px 16px 8px 24px;background:none;border:0;border-left:2px solid transparent;text-align:left;color:var(--mid)}
+.f span:last-child{margin-left:auto;font-size:12px;color:var(--dim)}
+.f:hover{background:var(--panel);color:var(--fg)}
+.f.on{background:rgba(79,224,168,.08);border-left-color:var(--ok);color:var(--ok)}
+.f.on span:last-child{color:var(--mid)}
+section{display:flex;flex-direction:column;min-width:0;min-height:0}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line);overflow-x:auto;background:var(--side)}
+.tab{padding:10px 18px;background:none;border:0;border-right:1px solid var(--line);border-bottom:2px solid transparent;color:var(--dim);white-space:nowrap;font-size:12px}
+.tab:hover{color:var(--fg)}
+.tab.on{color:var(--fg);font-weight:700;border-bottom-color:var(--ok);background:var(--bg)}
+.tabs .st{margin-left:auto;padding:0 16px;color:var(--dim);white-space:nowrap;font-size:11px;align-self:center;letter-spacing:.04em}
+
+/* ---------- log view ---------- */
+.view{flex:1;min-height:0;overflow:auto;background:var(--bg)}
+table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+thead{position:sticky;top:0;z-index:5}
+th{position:sticky;top:0;z-index:5;background:var(--side);text-align:left;font-weight:400;color:var(--dim);letter-spacing:.12em;padding:9px 12px;font-size:11px;border-bottom:1px solid var(--line)}
+td{padding:7px 12px;border-bottom:1px solid #121819;vertical-align:top;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.ts{white-space:normal;color:var(--dim);font-size:12px;word-break:break-word}
+tbody tr:hover td{background:rgba(255,255,255,.03)}
+tbody tr:has(td.bad) td:first-child{box-shadow:inset 2px 0 0 rgba(255,107,107,.55)}
+tr.atk td{background:rgba(255,107,107,.06)}
+tr.new{animation:in .5s}
+@keyframes in{from{background:rgba(79,224,168,.14)}}
+.ua{text-align:right;color:var(--mid)}
+.doc{margin:0;padding:22px 24px;white-space:pre-wrap;color:var(--mid);line-height:1.8;font:inherit}
+.doc b{color:var(--fg)}
+.col-resizer{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:10}
+.col-resizer:hover{background:var(--edge)}
+.resizing-columns,.resizing-columns *{cursor:col-resize!important;user-select:none!important}
+
+/* ---------- virtual terminal ---------- */
+.terminal-panel{display:flex;flex-direction:column;height:100%}
+.terminal-output{flex:1;overflow:auto;padding:18px 24px;display:flex;flex-direction:column;gap:6px}
+.terminal-line{color:var(--dim)}
+.terminal-line b{color:var(--ok);font-weight:500}
+.terminal-command{color:var(--fg);margin-top:8px}
+.terminal-prompt{color:var(--ok);margin-right:8px;font-weight:700}
+.terminal-result{margin:0;white-space:pre-wrap;color:var(--mid);font:inherit;line-height:1.6;overflow-wrap:anywhere}
+
+/* ---------- note + prompt ---------- */
+.note{display:flex;gap:16px;align-items:center;padding:9px 16px;border-bottom:1px solid var(--line);background:var(--side)}
+.chip[hidden]{display:none}
+.note .t{flex:none;color:var(--ok);letter-spacing:.12em;font-size:11px;padding:2px 10px;border:1px solid rgba(79,224,168,.4);border-radius:4px;background:rgba(79,224,168,.07)}
+.note .m{color:var(--mid);flex:1;align-self:center;font-size:12px}
+.chip{border:1px solid var(--edge);border-radius:4px;background:var(--bg);padding:4px 10px;text-align:left;letter-spacing:.06em;font-size:11px;color:var(--mid)}
+button.chip:hover{border-color:var(--mid);color:var(--fg)}
+#tail[aria-pressed="true"]{color:var(--ok);border-color:rgba(79,224,168,.5);background:rgba(79,224,168,.07)}
+.prompt{display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--line);background:var(--bg)}
+.prompt label{color:var(--ok);flex:none}
+.prompt input{flex:1;min-width:0;background:none;border:0;color:var(--fg);font:inherit;caret-color:var(--ok)}
+.prompt input:focus-visible{outline:0}
+.keys{display:flex;justify-content:space-between;gap:12px;padding:6px 16px 9px;color:var(--dim);font-size:11px;letter-spacing:.04em;flex-wrap:wrap}
+
+/* ---------- submit dialog ---------- */
+dialog{padding:0;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:10px;width:min(540px,92vw);max-height:90vh;overflow-y:auto;font:inherit;box-shadow:0 40px 80px -30px #000}
+dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(2px)}
+dialog .win-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mid);position:sticky;top:0;background:var(--panel);z-index:2}
+dialog .win-bar i{width:9px;height:9px;border-radius:50%;background:var(--edge)}
+dialog .win-bar .name{margin-left:10px}
+.dbody{padding:22px 24px 24px}
+dialog h2{margin:0 0 4px;font-size:20px;font-weight:800;letter-spacing:-.5px}
+dialog label{display:block;color:var(--dim);margin:16px 0 6px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+dialog input,dialog select{width:100%;height:40px;background:var(--bg);border:1px solid var(--edge);border-radius:4px;color:var(--fg);font:inherit;font-size:13px;padding:0 12px}
+dialog input:focus,dialog select:focus{outline:0;border-color:var(--ok);box-shadow:0 0 0 3px rgba(79,224,168,.12)}
+dialog input::placeholder{color:var(--dim)}
+dialog .result{min-height:44px;margin-top:16px;color:var(--mid);font-size:13px}
+dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:8px}
+dialog .actions .btn{height:38px;padding:0 20px}
+dialog .seg{display:flex;gap:8px}
+dialog .seg .btn{flex:1;height:38px}
+dialog .seg .btn[aria-pressed="true"]{background:var(--ok);color:#03150d;font-weight:700;border-color:var(--ok)}
+.atk{margin-top:14px;padding:14px 16px 16px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.atk-title{font-weight:700;color:var(--ok)}
+.atk-row{margin-top:14px;padding-top:2px;border-top:1px dashed var(--line)}
+.atk .btn{margin-top:14px;height:32px;font-size:12px}
+.atk .btn:disabled{opacity:.5;cursor:default}
+.atk-res{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px}
+.d-sum{margin-top:16px;font-size:12px;color:var(--dim)}
+
+/* ---------- exit buttons after a correct answer ---------- */
+[hidden]{display:none!important}
+a{color:inherit;text-decoration:none}
+dialog .after{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;padding-top:16px;border-top:1px dashed var(--line)}
+dialog .after .btn{height:38px;padding:0 18px}
+
+/* ---------- end-simulation confirm ---------- */
+dialog.confirm{width:min(420px,92vw)}
+.cmsg{margin:8px 0 22px;color:var(--mid);line-height:1.7}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#1a0505;font-weight:700;box-shadow:0 6px 22px -8px rgba(255,107,107,.6)}
+.btn.danger:hover,.btn.danger:focus-visible{background:#ff8585;color:#1a0505}
+
+/* ---------- responsive ---------- */
+@media(max-width:820px){
+ .main{grid-template-columns:1fr}
+ aside{display:none}
+ .ua,th:last-child{display:none}
+ .alert .r,.top .hide{display:none}
+ .note .t{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* JetBrains Mono turns "&&" (and similar) into one wide ligature, which looks like extra space while typing. */
+input,textarea,select{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}

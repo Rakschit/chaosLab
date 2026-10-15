@@ -1,0 +1,20 @@
+/* room page (on top of multiplayer.css) */
+.banner{margin-top:32px}
+.banner .cbody{align-items:flex-start;gap:12px}
+.big{font-size:clamp(28px,6vw,52px);font-weight:800;letter-spacing:-1.5px;line-height:1.1}
+.big.ok{color:var(--ok)}
+.bigsub{color:var(--mid);font-size:13px;max-width:640px}
+.share{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.code{display:inline-block;font-size:22px;font-weight:800;letter-spacing:4px;color:var(--ok);border:1px dashed rgba(79,224,168,.5);border-radius:4px;padding:2px 12px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.actions .go{width:auto;padding:0 22px}
+.btn.danger{border-color:rgba(255,107,107,.5);color:var(--bad)}
+.btn.danger:hover,.btn.danger:focus-visible{background:rgba(255,107,107,.08);border-color:var(--bad)}
+.rooms td.you{color:var(--ok)}
+.rooms tr.me td{background:rgba(79,224,168,.05)}
+.tag{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--edge);border-radius:4px;padding:0 6px;margin-left:8px;color:var(--mid);line-height:18px}
+.tag.ok{color:var(--ok);border-color:rgba(79,224,168,.5)}
+.rooms td:last-child,.rooms th:last-child{width:auto;text-align:left}
+.rooms th:first-child,.rooms td:first-child{width:1%}
+.rooms{overflow-x:auto}
+.rooms table{min-width:520px}

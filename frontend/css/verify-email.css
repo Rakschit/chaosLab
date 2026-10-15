@@ -112,3 +112,5 @@ a:focus-visible{outline:1px solid var(--mid);outline-offset:2px}
 .btn:before{content:"["}.btn:after{content:"]"}
 .btn:hover,.btn:focus-visible{background:rgba(79,224,168,.08);border-color:var(--ok)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
+/* JetBrains Mono turns "&&" (and similar) into one wide ligature, which looks like extra space while typing. */
+input,textarea,select{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}

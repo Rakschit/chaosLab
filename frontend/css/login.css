@@ -100,3 +100,12 @@ a:focus-visible{outline:1px solid var(--mid);outline-offset:2px}
 .btn-alt{background:var(--bg);border-color:rgba(79,224,168,.55);color:var(--ok);box-shadow:none}
 .btn-alt:hover,.btn-alt:focus-visible{background:rgba(79,224,168,.08)}
 .field label.long{letter-spacing:.8px}
+
+/* show / hide password */
+.pw{position:relative}
+.pw input{padding-right:76px}
+.pw-toggle{position:absolute;top:50%;right:8px;transform:translateY(-50%);height:28px;padding:0 10px;border:1px solid transparent;border-radius:4px;background:none;color:var(--dim);font:inherit;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.pw-toggle:hover,.pw-toggle[aria-pressed="true"]{color:var(--ok)}
+.pw-toggle:focus-visible{outline:1px solid var(--mid)}
+/* JetBrains Mono turns "&&" (and similar) into one wide ligature, which looks like extra space while typing. */
+input,textarea,select{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}

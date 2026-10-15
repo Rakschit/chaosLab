@@ -57,6 +57,8 @@ type HistoryItem struct {
 	DurationSeconds *int            `json:"duration_seconds"`
 	CreatedAt       string          `json:"created_at"`
 	Findings        json.RawMessage `json:"findings"`
+	// RoomCode is set when the answer was submitted in a multiplayer room.
+	RoomCode string `json:"room_code,omitempty"`
 }
 
 // RecordStart remembers when this user created this simulation. Creating the
@@ -135,7 +137,7 @@ func ListResults(ctx context.Context, db *sql.DB, userID string, limit, offset i
 		SELECT id::text, seed, environment, difficulty, attempt_number,
 		       score, matched, total, correct, duration_seconds,
 		       to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"'),
-		       findings::text
+		       findings::text, COALESCE(room_code, '')
 		FROM public.singleplayer_results
 		WHERE user_id = $1::uuid
 		ORDER BY created_at DESC, attempt_number DESC
@@ -153,7 +155,7 @@ func ListResults(ctx context.Context, db *sql.DB, userID string, limit, offset i
 		var findings string
 		if err := rows.Scan(&it.ID, &it.Seed, &it.Environment, &it.Difficulty, &it.AttemptNumber,
 			&it.Score, &it.Matched, &it.Total, &it.Correct, &duration,
-			&it.CreatedAt, &findings); err != nil {
+			&it.CreatedAt, &findings, &it.RoomCode); err != nil {
 			return nil, false, err
 		}
 		if duration.Valid {
