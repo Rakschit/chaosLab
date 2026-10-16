@@ -19,6 +19,11 @@ if (!simulationRaw) {
 const simulation = JSON.parse(simulationRaw);
 const files = simulation.files || {};
 
+// nginx and apache keep their access log in different places.
+const ACCESS_LOG = files["/var/log/apache2/access.log"] !== undefined
+    ? "/var/log/apache2/access.log"
+    : "/var/log/nginx/access.log";
+
 // ============================================================
 // SIMULATION METADATA
 // ============================================================
@@ -32,7 +37,7 @@ $("seed").textContent = simulation.seed || "--------";
 
 let rows = [];
 let filter = null;
-let tab = "/var/log/nginx/access.log";
+let tab = ACCESS_LOG;
 let tail = false;
 
 
@@ -48,11 +53,11 @@ function parseAccessLog(content) {
         /*
          * Expected nginx format:
          *
-         * IP - - [timestamp] "METHOD /path HTTP/1.1" STATUS BYTES
+         * IP - - [timestamp] "METHOD /path HTTP/1.1" STATUS BYTES "referer" "user-agent"
          */
 
         const match = line.match(
-            /^(\S+)\s+-\s+-\s+\[([^\]]+)\]\s+"(\w+)\s+(.+?)\s+HTTP\/[\d.]+"\s+(\d+)\s+(\d+)/
+            /^(\S+)\s+-\s+-\s+\[([^\]]+)\]\s+"(\w+)\s+(.+?)\s+HTTP\/[\d.]+"\s+(\d+)\s+(\d+)(?:\s+"([^"]*)"\s+"([^"]*)")?/
         );
 
         if (!match) {
@@ -63,6 +68,7 @@ function parseAccessLog(content) {
                 endpoint: line,
                 status: "",
                 bytes: "",
+                ua: "",
                 raw: line
             };
         }
@@ -74,6 +80,7 @@ function parseAccessLog(content) {
             endpoint: match[4],
             status: Number(match[5]),
             bytes: Number(match[6]),
+            ua: match[8] || "",
             raw: line
         };
     });
@@ -102,8 +109,8 @@ function rowHTML(r, isNew = false) {
             <td class="${statusClass}">
                 ${r.bytes} B
             </td>
-            <td class="ua">
-                -
+            <td class="ua" title="${escapeHTML(r.ua || "")}">
+                ${escapeHTML(r.ua || "-")}
             </td>
         </tr>
     `;
@@ -127,7 +134,7 @@ function matches(r) {
     }
 
     return filter.test(
-        `${r.ip} ${r.method} ${r.endpoint} ${r.status}`
+        `${r.ip} ${r.method} ${r.endpoint} ${r.status} ${r.ua || ""}`
     );
 }
 
@@ -142,7 +149,7 @@ function renderLog() {
                 <col data-column="request">
                 <col data-column="status" style="width:90px">
                 <col data-column="bytes" style="width:90px">
-                <col data-column="user-agent" style="width:150px">
+                <col data-column="user-agent" style="width:240px">
             </colgroup>
 
             <thead>
@@ -347,8 +354,7 @@ function renderFilesystem( node, container, level = 0 ) {
                 `${24 + level * 12}px`;
 
             const icon =
-                entry.path ===
-                "/var/log/nginx/error.log"
+                entry.path.endsWith("/error.log")
                     ? "△"
                     : "▤";
 
@@ -438,7 +444,7 @@ function show(path) {
 
         renderTerminal();
 
-    } else if (path === "/var/log/nginx/access.log") {
+    } else if (path === ACCESS_LOG) {
 
         renderLog();
 
@@ -849,23 +855,51 @@ $("d-send").onclick = async () => {
 };
 
 
+// Terminal scrollback lives here, so re-rendering the tab (switching files,
+// running a command) never wipes it. Only the `clear` command empties it.
+const TERMINAL_INTRO = `
+    <div class="terminal-line dim">
+        ChaosLab virtual shell
+    </div>
+
+    <div class="terminal-line dim">
+        Type <b>help</b> for available commands.
+    </div>
+`;
+
+let terminalHTML = TERMINAL_INTRO;
+
+function appendTerminal(html) {
+    terminalHTML += html;
+
+    const terminal = $("terminal-output");
+
+    if (terminal) {
+        terminal.insertAdjacentHTML("beforeend", html);
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+}
+
+function clearTerminal() {
+    terminalHTML = "";
+
+    const terminal = $("terminal-output");
+
+    if (terminal) {
+        terminal.innerHTML = "";
+    }
+}
+
 function renderTerminal() {
 
     $("view").innerHTML = `
         <div class="terminal-panel">
-
-            <div class="terminal-output" id="terminal-output">
-                <div class="terminal-line dim">
-                    ChaosLab virtual shell
-                </div>
-
-                <div class="terminal-line dim">
-                    Type <b>help</b> for available commands.
-                </div>
-            </div>
-
+            <div class="terminal-output" id="terminal-output">${terminalHTML}</div>
         </div>
     `;
+
+    const terminal = $("terminal-output");
+    terminal.scrollTop = terminal.scrollHeight;
 
     $("st").textContent = "virtual shell";
 }
@@ -905,11 +939,11 @@ const clockTimer = setInterval(() => {
 // INITIALIZE
 // ============================================================
 
-const ACCESS_LOG = "/var/log/nginx/access.log";
-
 rows = parseAccessLog(
     files[ACCESS_LOG] || ""
 );
+
+$("cmd").value = `cat ${ACCESS_LOG} | grep -E "500|502"`;
 
 updateTelemetry();
 show("/mission.txt");

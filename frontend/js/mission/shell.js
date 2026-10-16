@@ -2,7 +2,7 @@
 // VIRTUAL SHELL
 // ============================================================
 // Works only on the simulation's virtual filesystem (`files`,
-// defined in two.js). Never touches the user's real filesystem.
+// defined in mission.js). Never touches the user's real filesystem.
 //
 // Supported:
 //   clear
@@ -338,7 +338,7 @@ function commandHELP() {
         "  uniq [-c] [file]                collapse repeated lines (-c counts)",
         "  clear                           clear the screen",
         "",
-        "Pipes work:  cat /var/log/nginx/access.log | cut -d' ' -f1 | sort | uniq -c | sort -rn",
+        "Pipes work:  cat " + ACCESS_LOG + " | cut -d' ' -f1 | sort | uniq -c | sort -rn",
     ].join("\n");
 }
 
@@ -426,43 +426,25 @@ $("cmd").addEventListener("keydown", event => {
 
     const { out, clear } = runCommand(command);
 
+    // Make sure the terminal tab is showing (no-op re-render if it already is).
+    if (tab !== "__terminal__") show("__terminal__");
+
     if (clear) {
+        clearTerminal();
+    } else {
+        const body = out === ""
+            ? `<span class="dim">(no output)</span>`
+            : escapeHTML(out);
 
-    show("__terminal__");
+        appendTerminal(`
+            <div class="terminal-command">
+                <span class="terminal-prompt">$</span>
+                ${escapeHTML(command)}
+            </div>
 
-    const terminal = $("terminal-output");
-
-    if (terminal) {
-        terminal.innerHTML = "";
+            <pre class="terminal-result">${body}</pre>
+        `);
     }
-
-} else {
-
-    // Automatically switch to TERMINAL
-    show("__terminal__");
-
-    const terminal = $("terminal-output");
-
-    if (!terminal) return;
-
-    const body = out === ""
-        ? `<span class="dim">(no output)</span>`
-        : escapeHTML(out);
-
-    terminal.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="terminal-command">
-            <span class="terminal-prompt">$</span>
-            ${escapeHTML(command)}
-        </div>
-
-        <pre class="terminal-result">${body}</pre>
-        `
-    );
-
-    terminal.scrollTop = terminal.scrollHeight;
-}
 
     input.value = "";
 });

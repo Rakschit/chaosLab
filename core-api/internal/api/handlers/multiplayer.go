@@ -135,7 +135,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	if in.Environment == "" {
 		in.Environment = "nginx"
 	}
-	if in.Environment != "nginx" {
+	if !services.IsSupportedEnvironment(in.Environment) {
 		writeError(w, http.StatusBadRequest, "unsupported environment")
 		return
 	}

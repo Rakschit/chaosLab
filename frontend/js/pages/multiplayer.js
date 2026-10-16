@@ -39,7 +39,7 @@
   function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 
   // ---- Environment dropdown (kept in the front end, like singleplayer.js) ----
-  var environments = ["nginx"];
+  var environments = ["nginx", "apache"];
   var envSelect = $("env");
   envSelect.innerHTML = "";
   environments.forEach(function (name) {

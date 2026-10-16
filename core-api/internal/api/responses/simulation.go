@@ -3,6 +3,7 @@ package responses
 import (
 	"strings"
 
+	"core-api/internal/environments/apache"
 	"core-api/internal/environments/nginx"
 	"core-api/internal/models"
 )
@@ -16,6 +17,16 @@ type SimulationResponse struct {
 }
 
 func FromSimulation(sim models.Simulation) SimulationResponse {
+	if sim.Environment == "apache" {
+		return SimulationResponse{
+			Type:        sim.Type,
+			Seed:        sim.Seed,
+			Environment: sim.Environment,
+			Difficulty:  sim.Difficulty,
+			Files:       apache.Files(sim),
+		}
+	}
+
 	var missionBuilder strings.Builder
 
 	for i, mission := range sim.Missions {

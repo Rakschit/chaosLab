@@ -38,7 +38,35 @@ func generateNormalLog(rng *rand.Rand) models.Log {
 		Endpoint: endpoints[rng.Intn(len(endpoints))],
 		Status:   statuses[rng.Intn(len(statuses))],
 		Bytes:    rng.Intn(5000) + 200,
+
+		UserAgent: pick(rng, browserAgents),
 	}
+}
+
+var browserAgents = []string{
+	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+	"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
+	"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
+	"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+}
+
+// Tools an attacker is likely to use, per anomaly type.
+var attackerAgents = map[string][]string{
+	AnomalyCredentialBruteForce: {"Hydra", "python-requests/2.31.0", "curl/8.4.0"},
+	AnomalyEndpointScanning:     {"Nikto/2.5.0", "gobuster/3.6", "sqlmap/1.8", "DirBuster-1.0-RC1"},
+	AnomalyPathTraversal:        {"curl/8.4.0", "python-requests/2.31.0", "Wget/1.21.4"},
+}
+
+// Benign-but-noisy clients seen in decoy traffic.
+var decoyAgents = []string{
+	"Googlebot/2.1 (+http://www.google.com/bot.html)",
+	"Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+	"UptimeRobot/2.0",
+}
+
+func pick(rng *rand.Rand, list []string) string {
+	return list[rng.Intn(len(list))]
 }
 
 func generatePrivateIP(rng *rand.Rand) string {
@@ -84,6 +112,12 @@ func GenerateAnomalyLogs(
 	anomaly models.Anomaly,
 	startSec, endSec int,
 ) []models.Log {
+	agents := attackerAgents[anomaly.Type]
+	if len(agents) == 0 {
+		agents = []string{"curl/8.4.0"}
+	}
+	agent := pick(rng, agents)
+
 	entry := func(method, endpoint string, status, bytes int) models.Log {
 		return models.Log{
 			Time:     randomTimeBetween(rng, startSec, endSec),
@@ -92,6 +126,8 @@ func GenerateAnomalyLogs(
 			Endpoint: endpoint,
 			Status:   status,
 			Bytes:    bytes,
+
+			UserAgent: agent,
 		}
 	}
 
@@ -166,6 +202,8 @@ func GenerateDecoyLogs(
 			Endpoint: endpoints[rng.Intn(len(endpoints))],
 			Status:   statuses[rng.Intn(len(statuses))],
 			Bytes:    rng.Intn(1000) + 100,
+
+			UserAgent: pick(rng, decoyAgents),
 		})
 	}
 
@@ -233,13 +271,14 @@ func FormatAccessLog(logs []models.Log) string {
 	for _, entry := range logs {
 		fmt.Fprintf(
 			&builder,
-			"%s - - [%s] \"%s %s HTTP/1.1\" %d %d\n",
+			"%s - - [%s] \"%s %s HTTP/1.1\" %d %d \"-\" \"%s\"\n",
 			entry.SourceIP,
 			entry.Time.Format("02/Jan/2006:15:04:05 -0700"),
 			entry.Method,
 			entry.Endpoint,
 			entry.Status,
 			entry.Bytes,
+			entry.UserAgent,
 		)
 	}
 

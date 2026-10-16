@@ -2,16 +2,19 @@ package services
 
 import (
 	"fmt"
+	"math/rand"
 	"slices"
 
 	"core-api/internal/api/requests"
 	"core-api/internal/core"
+	"core-api/internal/environments/apache"
 	"core-api/internal/environments/nginx"
 	"core-api/internal/models"
 )
 
 const (
-	environmentNginx = "nginx"
+	environmentNginx  = "nginx"
+	environmentApache = "apache"
 
 	// decoyLinesPerSource is how many log lines each decoy source adds.
 	decoyLinesPerSource = 8
@@ -19,6 +22,37 @@ const (
 	// maxAttackers caps how many distinct attackers a simulation can have.
 	maxAttackers = 3
 )
+
+// environmentGen is the set of generators an environment provides. Adding a
+// new environment means adding one entry to environments below.
+type environmentGen struct {
+	selectMissions  func(*rand.Rand, core.DifficultyLevel, int) ([]models.Mission, error)
+	newSourceIP     func(*rand.Rand) string
+	generateAnomaly func(*rand.Rand, string, string) (models.Anomaly, error)
+	generateLog     func(rng *rand.Rand, anomalies []models.Anomaly, attackerOf []int,
+		normalCount, decoyLines int, noiseLevel float64) []models.Log
+}
+
+var environments = map[string]environmentGen{
+	environmentNginx: {
+		selectMissions:  nginx.SelectMissions,
+		newSourceIP:     nginx.NewSourceIP,
+		generateAnomaly: nginx.GenerateAnomaly,
+		generateLog:     nginx.GenerateAccessLog,
+	},
+	environmentApache: {
+		selectMissions:  apache.SelectMissions,
+		newSourceIP:     apache.NewSourceIP,
+		generateAnomaly: apache.GenerateAnomaly,
+		generateLog:     apache.GenerateAccessLog,
+	},
+}
+
+// IsSupportedEnvironment reports whether an environment name is known.
+func IsSupportedEnvironment(environment string) bool {
+	_, ok := environments[environment]
+	return ok
+}
 
 // CreateSingleplayer resolves the seed and builds the simulation.
 func CreateSingleplayer(req requests.CreateSingleplayerRequest) (models.Simulation, error) {
@@ -41,7 +75,8 @@ func CreateSingleplayer(req requests.CreateSingleplayerRequest) (models.Simulati
 // The order of RNG draws below is part of that contract: changing it changes
 // what every existing seed generates.
 func BuildSimulation(seed, environment, difficulty string) (models.Simulation, error) {
-	if environment != environmentNginx {
+	env, ok := environments[environment]
+	if !ok {
 		return models.Simulation{}, &BadRequestError{"unsupported environment"}
 	}
 
@@ -55,7 +90,7 @@ func BuildSimulation(seed, environment, difficulty string) (models.Simulation, e
 		return models.Simulation{}, &BadRequestError{"invalid seed: must be 16 hex characters"}
 	}
 
-	selectedMissions, err := nginx.SelectMissions(rng, cfg.Level, cfg.MainAnomalyCount)
+	selectedMissions, err := env.selectMissions(rng, cfg.Level, cfg.MainAnomalyCount)
 	if err != nil {
 		return models.Simulation{}, err
 	}
@@ -72,7 +107,7 @@ func BuildSimulation(seed, environment, difficulty string) (models.Simulation, e
 	// Distinct attacker IPs.
 	attackerIPs := make([]string, 0, attackerCount)
 	for len(attackerIPs) < attackerCount {
-		ip := nginx.NewSourceIP(rng)
+		ip := env.newSourceIP(rng)
 		if !slices.Contains(attackerIPs, ip) {
 			attackerIPs = append(attackerIPs, ip)
 		}
@@ -99,7 +134,7 @@ func BuildSimulation(seed, environment, difficulty string) (models.Simulation, e
 
 	seen := map[string]bool{}
 	for i, mission := range selectedMissions {
-		anomaly, err := nginx.GenerateAnomaly(rng, mission.AnomalyType, attackerIPs[attackerOf[i]])
+		anomaly, err := env.generateAnomaly(rng, mission.AnomalyType, attackerIPs[attackerOf[i]])
 		if err != nil {
 			return models.Simulation{}, err
 		}
@@ -119,7 +154,7 @@ func BuildSimulation(seed, environment, difficulty string) (models.Simulation, e
 		normalCount += rng.Intn(cfg.MaxLogLines - cfg.MinLogLines + 1)
 	}
 
-	simulation.Logs = nginx.GenerateAccessLog(
+	simulation.Logs = env.generateLog(
 		rng,
 		simulation.Anomalies,
 		attackerOf,

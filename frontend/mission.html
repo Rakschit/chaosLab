@@ -6,7 +6,7 @@
 <title>ChaosLab - Mission</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/two.css">
+<link rel="stylesheet" href="css/mission/mission.css">
 </head>
 <body>
 <div class="app">
@@ -26,7 +26,7 @@
   <div class="note">
     <div class="t">TELEMETRY NOTE</div>
     <div class="m" id="note-text">Loading capture...</div>
-    <!-- Kept (hidden) because two.js reads/writes these ids. -->
+    <!-- Kept (hidden) because mission.js reads/writes these ids. -->
     <div class="chip" hidden>FILTER:<br><span id="filt">[NONE]</span></div>
     <button class="chip" id="tail" aria-pressed="false" hidden>TAIL -F</button>
   </div>
@@ -91,10 +91,10 @@
   </div>
 </dialog>
 
-<script src="js/auth-api.js"></script>
-<script src="js/api.js"></script>
-<script src="js/two.js"></script>
-<script src="js/shell.js"></script>
-<script src="js/mission-actions.js"></script>
+<script src="js/core/auth-api.js"></script>
+<script src="js/core/api.js"></script>
+<script src="js/mission/mission.js"></script>
+<script src="js/mission/shell.js"></script>
+<script src="js/mission/mission-actions.js"></script>
 </body>
 </html>

@@ -3,7 +3,8 @@
 const session = AuthAPI.requireLogin();
 if (!session) throw new Error("Login required.");
 
-const environments = ["nginx"];
+const environments = ["nginx", "apache"];
+let environment = "nginx";
 const difficulties = ["easy", "medium", "hard"];
 let difficultyIndex = 0;
 
@@ -19,7 +20,9 @@ function randomSeed() {
 
 function render() {
   document.getElementById("envs").innerHTML =
-    environments.map(e => `<div>› ${e}</div>`).join("");
+    environments.map(e =>
+      `<div data-env="${e}" class="${e === environment ? "sel" : ""}"><span class="en">${e}</span></div>`
+    ).join("");
 
   const level = difficulties[difficultyIndex];
   difficulty.textContent = level;
@@ -43,7 +46,7 @@ async function startSimulation() {
 
   starting = true;
   const body = {
-    environment: "nginx",
+    environment: environment,
     difficulty: difficulties[difficultyIndex],
     seed: seed.value.trim()
   };
@@ -85,6 +88,13 @@ async function startSimulation() {
     starting = false;
   }
 }
+
+document.getElementById("envs").onclick = e => {
+  const row = e.target.closest("[data-env]");
+  if (!row) return;
+  environment = row.dataset.env;
+  render();
+};
 
 document.getElementById("reseed").onclick = () => {
   seed.value = randomSeed();

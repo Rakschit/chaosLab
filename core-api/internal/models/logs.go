@@ -9,4 +9,6 @@ type Log struct {
 	Endpoint string
 	Status   int
 	Bytes    int
+
+	UserAgent string
 }

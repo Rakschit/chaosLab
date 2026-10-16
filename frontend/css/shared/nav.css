@@ -57,7 +57,7 @@ font:13px/1.6 "JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;c
 /* small screens: links and account collapse behind the burger button */
 @media(max-width:860px){
   .cl-in{flex-wrap:wrap;padding:0 16px}
-  .cl-burger{display:grid}
+  .cl-nav .cl-burger{display:grid;margin-left:auto}
   .cl-collapse{display:none;flex-basis:100%;flex-direction:column;align-items:stretch;padding:6px 0 16px;border-top:1px solid var(--cl-line)}
   .cl-nav.open .cl-collapse{display:flex}
   .cl-links{flex-direction:column;align-self:auto;gap:0}

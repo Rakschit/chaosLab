@@ -6,8 +6,8 @@
 <title>ChaosLab - Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/dashboard.css">
-  <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/pages/dashboard.css">
+  <link rel="stylesheet" href="css/shared/nav.css">
 </head>
 <body>
 <div id="site-nav"></div>
@@ -28,6 +28,11 @@
   <div class="sec"><span class="label">Singleplayer games left this month</span><span class="hint" id="reset-hint"></span></div>
   <div class="msg" id="limits-msg" role="status">Loading…</div>
   <div class="grid" id="limits"></div>
+
+  <div class="sec"><span class="label">Multiplayer rooms left this month</span><span class="hint">joining a room is always free</span></div>
+  <div class="msg" id="rooms-msg" role="status">Loading…</div>
+  <div class="grid" id="rooms-limits"></div>
+
   <p class="note" id="upgrade" style="display:none"></p>
 
   <div class="sec"><span class="label">Your account</span></div>
@@ -39,9 +44,9 @@
 
   <footer><span>ChaosLab · incident simulator</span><span><a href="index.html">Home</a></span></footer>
 </main>
-<script src="js/auth-api.js"></script>
-<script src="js/nav.js"></script>
-<script src="js/api.js"></script>
-<script src="js/dashboard.js"></script>
+<script src="js/core/auth-api.js"></script>
+<script src="js/core/nav.js"></script>
+<script src="js/core/api.js"></script>
+<script src="js/pages/dashboard.js"></script>
 </body>
 </html>

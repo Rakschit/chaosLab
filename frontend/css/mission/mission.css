@@ -67,7 +67,7 @@ tbody tr:has(td.bad) td:first-child{box-shadow:inset 2px 0 0 rgba(255,107,107,.5
 tr.atk td{background:rgba(255,107,107,.06)}
 tr.new{animation:in .5s}
 @keyframes in{from{background:rgba(79,224,168,.14)}}
-.ua{text-align:right;color:var(--mid)}
+.ua{text-align:left;color:var(--mid)}
 .doc{margin:0;padding:22px 24px;white-space:pre-wrap;color:var(--mid);line-height:1.8;font:inherit}
 .doc b{color:var(--fg)}
 .col-resizer{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:10}

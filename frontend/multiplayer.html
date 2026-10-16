@@ -6,8 +6,8 @@
 <title>ChaosLab - Multiplayer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/multiplayer.css">
-  <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/pages/multiplayer.css">
+  <link rel="stylesheet" href="css/shared/nav.css">
 </head>
 <body>
 <div id="site-nav"></div>
@@ -31,6 +31,7 @@
             <label for="env">Environment</label>
             <select id="env" name="env">
               <option value="nginx">nginx</option>
+              <option value="apache">apache</option>
             </select>
           </div>
           <div class="field">
@@ -92,9 +93,9 @@
 
   <footer><span>ChaosLab</span><span><a href="singleplayer.html">Singleplayer</a></span></footer>
 </main>
-<script src="js/auth-api.js"></script>
-<script src="js/nav.js"></script>
-<script src="js/api.js"></script>
-<script src="js/multiplayer.js"></script>
+<script src="js/core/auth-api.js"></script>
+<script src="js/core/nav.js"></script>
+<script src="js/core/api.js"></script>
+<script src="js/pages/multiplayer.js"></script>
 </body>
 </html>

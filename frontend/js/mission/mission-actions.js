@@ -1,4 +1,4 @@
-// Navigation for the mission page. two.js is not touched.
+// Navigation for the mission page. mission.js is not touched.
 //  1) End simulation asks "Are you sure?" first and, on Yes, leaves the page.
 //     In a multiplayer race it also tells the server, so the player shows as
 //     "Ended" on the scoreboard instead of "Working on it" forever. Closing the
@@ -54,7 +54,7 @@
       if (msg) msg.textContent = "Are you sure you want to end this simulation? You will be out of this race and cannot reopen it. Everyone else keeps playing.";
     }
 
-    // Catch the click before two.js sees it; let it through only after Yes.
+    // Catch the click before mission.js sees it; let it through only after Yes.
     document.addEventListener("click", function (event) {
       if (!event.target.closest("#abort")) return;
       if (confirmed) { confirmed = false; return; }
@@ -81,7 +81,7 @@
     back.textContent = dest.label;
     hist.hidden = !dest.history;
 
-    // two.js writes "SCORE n/100 - ..." here for every graded answer, right or wrong.
+    // mission.js writes "SCORE n/100 - ..." here for every graded answer, right or wrong.
     new MutationObserver(function () {
       if (/^\s*SCORE\b/i.test(result.textContent)) after.hidden = false;
     }).observe(result, { childList: true, characterData: true, subtree: true });
