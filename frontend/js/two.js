@@ -31,7 +31,7 @@ $("seed").textContent = simulation.seed || "--------";
 // ============================================================
 
 let rows = [];
-let filter = null;
+const logFilters = { ip: "", status: "", method: "", path: "" };
 let tab = "/var/log/nginx/access.log";
 let tail = false;
 
@@ -121,14 +121,29 @@ function escapeHTML(value) {
 
 
 function matches(r) {
+    if (logFilters.ip && !String(r.ip).toLowerCase().includes(logFilters.ip.toLowerCase())) return false;
+    if (logFilters.status && String(r.status) !== logFilters.status) return false;
+    if (logFilters.method && r.method !== logFilters.method) return false;
+    if (logFilters.path && !String(r.endpoint).toLowerCase().includes(logFilters.path.toLowerCase())) return false;
+    return true;
+}
 
-    if (!filter) {
-        return true;
-    }
+function filteredRows() { return rows.filter(matches); }
 
-    return filter.test(
-        `${r.ip} ${r.method} ${r.endpoint} ${r.status}`
-    );
+function updateFilterSummary() {
+    const active = Object.values(logFilters).filter(Boolean).length;
+    $("filter-summary").textContent = active ? `${filteredRows().length.toLocaleString()} matching / ${rows.length.toLocaleString()}` : "All entries";
+}
+
+function setupLogFilters() {
+    const fields = {
+        ip: $("filter-ip"), status: $("filter-status"), method: $("filter-method"), path: $("filter-path")
+    };
+    Object.entries(fields).forEach(([key, field]) => {
+        field.value = logFilters[key];
+        field.oninput = field.onchange = () => { logFilters[key] = field.value.trim(); renderLog(); };
+    });
+    $("clear-filters").onclick = () => { Object.keys(logFilters).forEach(key => { logFilters[key] = ""; fields[key].value = ""; }); renderLog(); fields.ip.focus(); };
 }
 
 
@@ -157,7 +172,7 @@ function renderLog() {
             </thead>
 
             <tbody id="tb">
-                ${rows.filter(matches).map(r => rowHTML(r)).join("")}
+                ${filteredRows().map(r => rowHTML(r)).join("") || `<tr><td colspan="6" class="empty-log">No log entries match these filters.</td></tr>`}
             </tbody>
         </table>
     `;
@@ -170,6 +185,8 @@ function renderLog() {
 
 
     updateStatus();
+    updateFilterSummary();
+    setupLogFilters();
 }
 
 // ============================================================
@@ -262,7 +279,7 @@ function setupColumnResizers() {
 
 function updateStatus() {
 
-    const count = rows.filter(matches).length;
+    const count = filteredRows().length;
 
     $("st").textContent =
         `LINE: ${count.toLocaleString()} / ${rows.length.toLocaleString()} UTF-8`;
@@ -433,6 +450,8 @@ function show(path) {
             b.dataset.path === path
         )
     );
+
+    $("log-filters").hidden = path !== "/var/log/nginx/access.log";
 
     if (path === "__terminal__") {
 
@@ -762,8 +781,44 @@ function readFindings() {
     return { findings, where };
 }
 
+function renderResultAnalysis(data) {
+    const analysis = $("dossier-analysis");
+    const matched = Number(data.matched) || 0;
+    const total = Number(data.total) || 0;
+    const score = Number(data.score) || 0;
+    const accuracy = total ? Math.round((matched / total) * 100) : 0;
+    const seconds = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+    const elapsed = `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+
+    $("analysis-verdict").textContent = data.correct ? "MISSION COMPLETE" : "REVIEW NEEDED";
+    $("analysis-verdict").className = data.correct ? "ok" : "bad";
+    $("analysis-metrics").innerHTML = [
+        [score + "/100", "Score"],
+        [matched + "/" + total, "Objectives matched"],
+        [accuracy + "%", "Accuracy"],
+        [elapsed, "Investigation time"]
+    ].map(metric => `<div class="analysis-metric"><b>${escapeHTML(metric[0])}</b><span>${escapeHTML(metric[1])}</span></div>`).join("");
+
+    const findings = Array.isArray(data.findings) ? data.findings : [];
+    $("analysis-breakdown").innerHTML = findings.length ? findings.map((finding, index) => {
+        const complete = finding.correct === true;
+        const fields = [
+            ["IP", finding.source_ip],
+            ["Path", finding.endpoint],
+            ["Type", finding.anomaly_type]
+        ].map(field => `${field[0]} ${field[1] ? "✓" : "✕"}`).join("  ·  ");
+        return `<div class="analysis-row ${complete ? "good" : "bad"}"><b>Finding ${index + 1}</b><span>${fields}</span></div>`;
+    }).join("") : `<div class="analysis-row bad"><b>No field-level breakdown</b><span>Review the mission objectives.</span></div>`;
+
+    $("analysis-tip").textContent = data.correct
+        ? "Excellent work. All reported objectives matched the simulated incident."
+        : `${Math.max(0, total - matched)} objective${total - matched === 1 ? "" : "s"} still need review. Use the field breakdown above to refine your next submission.`;
+    analysis.hidden = false;
+}
+
 $("submit").onclick = () => {
     $("dossier-result").textContent = "";
+    $("dossier-analysis").hidden = true;
     renderAttackers();
     $("dossier").showModal();
 };
@@ -834,6 +889,7 @@ $("d-send").onclick = async () => {
         result.innerHTML =
             `<b>SCORE ${data.score}/100 - ${data.correct ? "CORRECT" : "INCORRECT"}</b>` +
             ` &middot; ${data.matched}/${data.total} anomalies found`;
+        renderResultAnalysis(data);
 
         if (data.correct) {
             submitState.accepted = true;

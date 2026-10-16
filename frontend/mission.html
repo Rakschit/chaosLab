@@ -31,6 +31,17 @@
     <button class="chip" id="tail" aria-pressed="false" hidden>TAIL -F</button>
   </div>
 
+  <div class="log-filters" id="log-filters" hidden>
+    <div class="filter-heading"><span>LOG FILTERS</span><span id="filter-summary">All entries</span></div>
+    <div class="filter-grid">
+      <label>IP address<input id="filter-ip" type="search" placeholder="203.0.113.7" autocomplete="off"></label>
+      <label>Status code<input id="filter-status" type="search" inputmode="numeric" placeholder="401" autocomplete="off"></label>
+      <label>HTTP method<select id="filter-method"><option value="">All methods</option><option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option><option>HEAD</option></select></label>
+      <label>Request path<input id="filter-path" type="search" placeholder="/login" autocomplete="off"></label>
+      <button class="filter-clear" id="clear-filters" type="button">Clear filters</button>
+    </div>
+  </div>
+
   <div class="main">
     <aside>
   <div class="root">
@@ -68,6 +79,12 @@
 
   <div class="d-sum" id="d-sum">Choose the number of attackers to start.</div>
   <div class="result" id="dossier-result"></div>
+  <section class="result-analysis" id="dossier-analysis" hidden aria-live="polite">
+    <div class="analysis-heading"><span>RESULT ANALYSIS</span><span id="analysis-verdict"></span></div>
+    <div class="analysis-metrics" id="analysis-metrics"></div>
+    <div class="analysis-breakdown" id="analysis-breakdown"></div>
+    <p class="analysis-tip" id="analysis-tip"></p>
+  </section>
   <div class="after" id="d-after" hidden>
     <a class="btn sub" id="d-back" href="dashboard.html">Back to dashboard</a>
     <a class="btn" id="d-history" href="history.html">View history</a>

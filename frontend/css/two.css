@@ -55,6 +55,9 @@ section{display:flex;flex-direction:column;min-width:0;min-height:0}
 .tab.on{color:var(--fg);font-weight:700;border-bottom-color:var(--ok);background:var(--bg)}
 .tabs .st{margin-left:auto;padding:0 16px;color:var(--dim);white-space:nowrap;font-size:11px;align-self:center;letter-spacing:.04em}
 
+/* ---------- access-log filters ---------- */
+.log-filters{padding:10px 16px;border-bottom:1px solid var(--line);background:var(--side)}.filter-heading{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;color:var(--ok);font-size:10px;letter-spacing:.12em}.filter-heading span:last-child{color:var(--dim);letter-spacing:0}.filter-grid{display:grid;grid-template-columns:1.1fr .8fr .8fr 1.2fr auto;gap:8px;align-items:end}.filter-grid label{display:grid;gap:4px;color:var(--dim);font-size:10px}.filter-grid input,.filter-grid select{width:100%;height:32px;padding:0 9px;background:var(--bg);border:1px solid var(--edge);border-radius:4px;color:var(--fg);font:inherit;font-size:11px}.filter-grid input:focus,.filter-grid select:focus{outline:0;border-color:var(--ok);box-shadow:0 0 0 3px rgba(79,224,168,.1)}.filter-clear{height:32px;padding:0 10px;border:1px solid var(--edge);border-radius:4px;background:transparent;color:var(--mid);font:inherit;font-size:11px;white-space:nowrap}.filter-clear:hover{border-color:var(--mid);color:var(--fg)}
+
 /* ---------- log view ---------- */
 .view{flex:1;min-height:0;overflow:auto;background:var(--bg)}
 table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
@@ -68,6 +71,7 @@ tr.atk td{background:rgba(255,107,107,.06)}
 tr.new{animation:in .5s}
 @keyframes in{from{background:rgba(79,224,168,.14)}}
 .ua{text-align:right;color:var(--mid)}
+.empty-log{text-align:center;color:var(--dim);padding:32px 12px!important}
 .doc{margin:0;padding:22px 24px;white-space:pre-wrap;color:var(--mid);line-height:1.8;font:inherit}
 .doc b{color:var(--fg)}
 .col-resizer{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:10}
@@ -110,6 +114,7 @@ dialog input,dialog select{width:100%;height:40px;background:var(--bg);border:1p
 dialog input:focus,dialog select:focus{outline:0;border-color:var(--ok);box-shadow:0 0 0 3px rgba(79,224,168,.12)}
 dialog input::placeholder{color:var(--dim)}
 dialog .result{min-height:44px;margin-top:16px;color:var(--mid);font-size:13px}
+.result-analysis{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:7px;background:var(--bg)}.analysis-heading{display:flex;justify-content:space-between;gap:12px;color:var(--ok);font-size:10px;letter-spacing:1.5px}.analysis-heading span:last-child{color:var(--ok)}.analysis-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.analysis-metric{padding:10px;border:1px solid var(--line);border-radius:4px;background:var(--panel);text-align:center}.analysis-metric b{display:block;color:var(--fg);font-size:18px}.analysis-metric span{color:var(--dim);font-size:10px}.analysis-breakdown{display:grid;gap:6px;margin-top:12px}.analysis-row{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-left:2px solid var(--edge);background:var(--panel);font-size:11px;color:var(--mid)}.analysis-row.good{border-left-color:var(--ok)}.analysis-row.bad{border-left-color:var(--bad)}.analysis-row b{color:var(--fg);font-weight:500}.analysis-tip{margin:12px 0 0;color:var(--dim);font-size:11px;line-height:1.6}
 .feedback-form{width:100%;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:8px;text-align:left}.feedback-title{color:var(--ok);font-size:11px;letter-spacing:1.5px}.feedback-form label{color:var(--mid);font-size:12px}.feedback-form label span{color:var(--dim)}.feedback-form select,.feedback-form textarea{width:100%;border:1px solid var(--edge);border-radius:4px;background:var(--panel2);color:var(--fg);font:inherit;font-size:12px;padding:9px}.feedback-form textarea{resize:vertical}.feedback-form .btn{width:max-content;margin-top:4px}.feedback-status{min-height:18px;color:var(--mid);font-size:11px}.feedback-status.ok{color:var(--ok)}.feedback-status.bad{color:var(--bad)}
 dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:8px}
 dialog .actions .btn{height:38px;padding:0 20px}
@@ -143,6 +148,8 @@ dialog.confirm{width:min(420px,92vw)}
  .ua,th:last-child{display:none}
  .alert .r,.top .hide{display:none}
  .note .t{display:none}
+ .filter-grid{grid-template-columns:repeat(2,1fr)}.filter-clear{grid-column:1/-1}
+ .analysis-metrics{grid-template-columns:repeat(2,1fr)}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 /* JetBrains Mono turns "&&" (and similar) into one wide ligature, which looks like extra space while typing. */
