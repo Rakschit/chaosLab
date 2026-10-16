@@ -841,12 +841,43 @@ $("d-send").onclick = async () => {
             $("submit").disabled = true;
         }
 
+        // Show the feedback form after the mission result is saved.
+        $("d-after").hidden = false;
+
     } catch (error) {
         result.innerHTML = `<span class="bad">${escapeHTML(error.message)}</span>`;
     } finally {
         updateSummary();
     }
 };
+
+$("mission-feedback").addEventListener("submit", event => {
+    event.preventDefault();
+    const rating = $("feedback-rating").value;
+    const comment = $("feedback-comment").value.trim();
+    const status = $("feedback-status");
+    if (!rating) {
+        status.className = "feedback-status bad";
+        status.textContent = "Please select a rating.";
+        return;
+    }
+    const scoreText = $("dossier-result").textContent.match(/SCORE\s+(\d+)/i);
+    const payload = { rating: Number(rating), difficulty: simulation.difficulty || "", seed: simulation.seed || "", score: scoreText ? Number(scoreText[1]) : null, comment: comment };
+    const button = event.target.querySelector("button[type=submit]");
+    button.disabled = true;
+    status.textContent = "Saving feedback...";
+    AuthAPI.submitFeedback(payload, session.access_token).then(response => {
+        if (response.status === 401) { AuthAPI.clearSession(); AuthAPI.requireLogin(); return; }
+        if (!response.ok) throw new Error(response.data.error || "Could not save feedback.");
+        status.className = "feedback-status ok";
+        status.textContent = "Feedback saved and sent to the admin panel.";
+        event.target.reset();
+    }).catch(error => {
+        button.disabled = false;
+        status.className = "feedback-status bad";
+        status.textContent = error.message;
+    });
+});
 
 
 function renderTerminal() {

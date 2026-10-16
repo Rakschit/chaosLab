@@ -71,6 +71,14 @@
   <div class="after" id="d-after" hidden>
     <a class="btn sub" id="d-back" href="dashboard.html">Back to dashboard</a>
     <a class="btn" id="d-history" href="history.html">View history</a>
+    <form class="feedback-form" id="mission-feedback">
+      <div class="feedback-title">MISSION FEEDBACK</div>
+      <label for="feedback-rating">How would you rate this mission?</label>
+      <select id="feedback-rating" required><option value="">Select a rating</option><option value="5">5 - Excellent</option><option value="4">4 - Good</option><option value="3">3 - Average</option><option value="2">2 - Difficult to follow</option><option value="1">1 - Needs improvement</option></select>
+      <label for="feedback-comment">Comments for the admin <span>(optional)</span></label>
+      <textarea id="feedback-comment" rows="3" maxlength="1000" placeholder="What worked well or should be improved?"></textarea>
+      <button class="btn" type="submit">Send feedback to admin</button><div class="feedback-status" id="feedback-status" role="status"></div>
+    </form>
   </div>
   <div class="actions">
     <button class="btn" id="d-cancel" type="button">Cancel</button>

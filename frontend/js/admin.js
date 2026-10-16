@@ -9,6 +9,8 @@
   var msg = document.getElementById("msg");
   var list = document.getElementById("list");
   var count = document.getElementById("count");
+  var feedbackList = document.getElementById("feedback-list");
+  var feedbackCount = document.getElementById("feedback-count");
 
   function show(text, kind) {
     msg.textContent = text;
@@ -108,6 +110,30 @@
     return card;
   }
 
+  function renderFeedback(item) {
+    var card = el("div", "card feedback-card");
+    card.appendChild(el("h3", "", (item.display_name || "(no name)") + " · " + item.email));
+    card.appendChild(el("p", "dim", new Date(item.created_at).toLocaleString()));
+    card.appendChild(el("p", "", "Rating: " + item.rating + "/5" + (item.score === null || item.score === undefined ? "" : " · Score: " + item.score + "/100")));
+    card.appendChild(el("p", "", "Difficulty: " + (item.difficulty || "unknown") + " · Seed: " + (item.seed || "unknown")));
+    var comment = el("p", "", item.comment || "(no comment)");
+    comment.style.whiteSpace = "pre-wrap";
+    card.appendChild(comment);
+    return card;
+  }
+
+  function loadFeedback() {
+    AuthAPI.authedGet("/admin/feedback", session.access_token).then(function (res) {
+      if (res.status === 401) { expired(); return; }
+      if (res.status === 403) { window.location.replace("profile.html"); return; }
+      if (!res.ok) { feedbackCount.textContent = "Could not load"; return; }
+      var items = res.data.feedback || [];
+      feedbackCount.textContent = items.length + (items.length === 1 ? " submission" : " submissions");
+      items.forEach(function (item) { feedbackList.appendChild(renderFeedback(item)); });
+      if (!items.length) feedbackList.appendChild(el("div", "msg", "No feedback submissions yet."));
+    }).catch(function () { feedbackCount.textContent = "Could not load"; });
+  }
+
   AuthAPI.authedGet("/admin/plan-requests", session.access_token).then(function (res) {
     if (res.status === 401) { expired(); return; }
     if (res.status === 403) { window.location.replace("profile.html"); return; }
@@ -120,6 +146,7 @@
       list.appendChild(renderCard(request));
     });
     updateCount();
+    loadFeedback();
   }).catch(function () {
     show("Could not reach the server.", "err");
   });

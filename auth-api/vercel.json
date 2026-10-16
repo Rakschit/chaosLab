@@ -57,6 +57,14 @@
       "destination": "/api/auth/plan?_route=admin-plan-decision"
     },
     {
+      "source": "/api/v1/auth/feedback",
+      "destination": "/api/auth/plan?_route=feedback"
+    },
+    {
+      "source": "/api/v1/auth/admin/feedback",
+      "destination": "/api/auth/plan?_route=admin-feedback"
+    },
+    {
       "source": "/api/v1/auth/institution/start",
       "destination": "/api/auth/institution?_route=start"
     },

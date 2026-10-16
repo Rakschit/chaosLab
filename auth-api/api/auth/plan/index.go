@@ -16,6 +16,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		handlers.AdminPlanRequests(w, r)
 	case "admin-plan-decision":
 		handlers.AdminPlanDecision(w, r)
+	case "feedback":
+		handlers.SubmitFeedback(w, r)
+	case "admin-feedback":
+		handlers.AdminFeedback(w, r)
 	default:
 		http.NotFound(w, r)
 	}

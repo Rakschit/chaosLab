@@ -46,6 +46,10 @@
     });
   }
 
+  function submitFeedback(body, token) {
+    return authedPost("/feedback", body, token);
+  }
+
   // GET /me with the Bearer token; same result shape as post().
   function me(token) {
     return fetch(API_BASE + PREFIX + "/me", {
@@ -153,6 +157,8 @@
   window.AuthAPI = {
     authedPost: authedPost,
     authedGet: authedGet,
+    submitFeedback: submitFeedback,
+    submitFeedback: submitFeedback,
     updateUser: updateUser,
     setNext: setNext,
     takeNext: takeNext,
